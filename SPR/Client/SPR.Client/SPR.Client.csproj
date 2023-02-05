@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+    <ItemGroup>
+      <PackageReference Include="MvvmCross" Version="9.0.9" />
+      <PackageReference Include="MvvmCross.Platforms.Wpf" Version="9.0.9" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="Assets\closeBtn_default.png" />
+      <Resource Include="Assets\closeBtn_default.png" />
+      <None Remove="Assets\closeBtn_MouseOver.png" />
+      <Resource Include="Assets\closeBtn_MouseOver.png" />
+      <None Remove="Assets\img_background.png" />
+      <Resource Include="Assets\img_background.png" />
+      <None Remove="Assets\img_contact.png" />
+      <Resource Include="Assets\img_contact.png" />
+      <None Remove="Assets\img_home.png" />
+      <Resource Include="Assets\img_home.png" />
+      <None Remove="Assets\img_map.png" />
+      <Resource Include="Assets\img_map.png" />
+      <None Remove="Assets\img_message.png" />
+      <Resource Include="Assets\img_message.png" />
+      <None Remove="Assets\img_setting.png" />
+      <Resource Include="Assets\img_setting.png" />
+      <None Remove="Assets\img_signout.png" />
+      <Resource Include="Assets\img_signout.png" />
+      <None Remove="Assets\tgBtn_default.png" />
+      <Resource Include="Assets\tgBtn_default.png" />
+      <None Remove="Assets\tgBtn_MouseOver.png" />
+      <Resource Include="Assets\tgBtn_MouseOver.png" />
+      <None Remove="Fonts\LICENSE.txt" />
+      <Resource Include="Fonts\LICENSE.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Fonts\Roboto-Light.ttf" />
+      <Resource Include="Fonts\Roboto-Light.ttf">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+    </ItemGroup>
+
+</Project>
