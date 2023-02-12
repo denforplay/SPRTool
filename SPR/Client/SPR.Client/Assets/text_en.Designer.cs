@@ -61,11 +61,29 @@ namespace SPR.Client.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Course name.
+        /// </summary>
+        public static string CourseNameText {
+            get {
+                return ResourceManager.GetString("CourseNameText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome to the course page.
         /// </summary>
         public static string CourseTitle {
             get {
                 return ResourceManager.GetString("CourseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to the student management page.
+        /// </summary>
+        public static string StudentTitle {
+            get {
+                return ResourceManager.GetString("StudentTitle", resourceCulture);
             }
         }
     }

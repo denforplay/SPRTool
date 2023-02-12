@@ -1,0 +1,9 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="SPR.Windows.Build" Manufacturer="TODO Manufacturer" Version="1.0.0.0" UpgradeCode="e3f07bd7-cbc5-4b58-a6ab-3973722ff1f8">
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+
+    <Feature Id="Main">
+      <ComponentGroupRef Id="ExampleComponents" />
+    </Feature>
+  </Package>
+</Wix>

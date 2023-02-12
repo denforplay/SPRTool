@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="SPR.Client.Views.Pages.Students.GroupsTable"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SPR.Client.Views.Pages.Students"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="400" Width="Auto" Height="Auto">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <ListView ItemsSource="{Binding Groups}" Background="AliceBlue" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" x:Name="courseFrame">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Name}">Name</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="SPR.Client.Views.Pages.Students.StudentsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:resources="clr-namespace:SPR.Client.Assets"
+      xmlns:viewModels="clr-namespace:SPR.Client.ViewModels"
+      xmlns:studentViews="clr-namespace:SPR.Client.Views.Pages.Students"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="White">
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type viewModels:StudentTableViewModel}">
+                <studentViews:StudentsTable/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:GroupTableViewModel}">
+                <studentViews:GroupsTable/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:StudentEditViewModel}">
+                <studentViews:StudentEditPage/>
+            </DataTemplate>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="32" Text="{x:Static resources:text_en.StudentTitle}" VerticalAlignment="Center"/>
+        <ContentControl Background="AliceBlue" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Content="{Binding CurrentTable}"/>
+        <ContentControl Background="AliceBlue" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Content="{Binding CurrentEditWindow}"/>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Grid.Column="0" Grid.Row="0" FontSize="30" Command="{Binding StudentModeCommand}">Enable students edit mode</Button>
+            <Button Grid.Column="0" Grid.Row="1" FontSize="30" Command="{Binding GroupModeCommand}">Enable groups edit mode</Button>
+        </Grid>
+    </Grid>
+</UserControl>

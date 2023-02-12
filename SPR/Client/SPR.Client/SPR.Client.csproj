@@ -7,8 +7,9 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="MvvmCross" Version="9.0.9" />
-      <PackageReference Include="MvvmCross.Platforms.Wpf" Version="9.0.9" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
     </ItemGroup>
     <ItemGroup>
       <None Remove="Assets\closeBtn_default.png" />
@@ -38,6 +39,8 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Resource>
       <None Remove="Fonts\Roboto-Light.ttf" />
+      <ProjectReference Include="..\SPR.Client.Abstractions\SPR.Client.Abstractions.csproj" />
+      <ProjectReference Include="..\SPR.Client.Communication\SPR.Client.Communication.csproj" />
       <Resource Include="Fonts\Roboto-Light.ttf">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Resource>

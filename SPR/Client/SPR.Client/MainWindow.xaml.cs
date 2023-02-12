@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MvvmCross.Platforms.Wpf.Views;
+using SPR.Client.Abstractions.Services;
+using SPR.Client.Commands;
+using SPR.Client.ViewModels;
 using SPR.Client.Views.Buttons;
 
 namespace SPR.Client
 {
-    public partial class MainWindow : MvxWindow
+    public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly INavigationService _navigationService;
+
+        public MainWindow(INavigationService navigationService)
         {
+            _navigationService = navigationService;
+            DataContext = new MainViewModel(_navigationService);
             InitializeComponent();
         }
         
@@ -68,7 +63,6 @@ namespace SPR.Client
             var selected = sidebar.SelectedItem as NavigationButton;
             if (selected is not null)
             {
-                navframe.Navigate(selected.Navlink);
             }
         }
     }

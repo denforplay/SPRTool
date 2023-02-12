@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SPR.Shared.Models\SPR.Shared.Models.csproj" />
+    <ProjectReference Include="..\SPR.Client.Abstractions\SPR.Client.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>
