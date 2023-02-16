@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\SPR.Shared.Models\SPR.Shared.Models.csproj" />
-    <ProjectReference Include="..\..\SPR.Shared.Models\SPR.Shared.Models.csproj" />
   </ItemGroup>
 
 </Project>

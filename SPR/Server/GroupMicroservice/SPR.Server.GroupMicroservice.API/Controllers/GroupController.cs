@@ -77,5 +77,12 @@ namespace SPR.Server.GroupMicroservice.API.Controllers
 
             return outputGroups;
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteGroupById(Guid id)
+        {
+            await _groupRepository.DeleteAsync(id);
+            return Ok();
+        }
     }
 }

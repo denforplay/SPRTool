@@ -16,19 +16,13 @@ using System.Windows.Shapes;
 namespace SPR.Client.Views.Pages.Students
 {
     /// <summary>
-    /// Interaction logic for GroupsTable.xaml
+    /// Interaction logic for GroupEditPage.xaml
     /// </summary>
-    public partial class GroupsTable : UserControl
+    public partial class GroupEditPage : UserControl
     {
-        public GroupsTable()
+        public GroupEditPage()
         {
             InitializeComponent();
-        }
-
-        private void SelectItemClick(object sender, RoutedEventArgs e)
-        {
-            var buttonElement = (Button)sender;
-            listView.SelectedItem = buttonElement.DataContext;
         }
     }
 }

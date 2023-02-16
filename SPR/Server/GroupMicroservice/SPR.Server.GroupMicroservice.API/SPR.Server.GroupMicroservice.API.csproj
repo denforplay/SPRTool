@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\SPR.Shared.Models\SPR.Shared.Models.csproj" />
-    <ProjectReference Include="..\..\..\SPR.Shared.Models\SPR.Shared.Models.csproj" />
     <ProjectReference Include="..\SPR.Server.GroupMicroservice.Domain\SPR.Server.GroupMicroservice.Domain.csproj" />
     <ProjectReference Include="..\SPR.Server.GroupMicroservice.Infrastructure\SPR.Server.GroupMicroservice.Infrastructure.csproj" />
   </ItemGroup>

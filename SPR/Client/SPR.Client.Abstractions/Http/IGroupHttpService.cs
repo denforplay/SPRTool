@@ -6,5 +6,6 @@ namespace SPR.Client.Abstractions.Http
     {
         Task AddGroup(GroupModel groupModel);
         Task<IReadOnlyCollection<GroupModel>> GetAllGroups();
+        Task DeleteGroup(Guid id);
     }
 }

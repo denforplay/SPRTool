@@ -19,6 +19,9 @@
             <DataTemplate DataType="{x:Type viewModels:StudentEditViewModel}">
                 <studentViews:StudentEditPage/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:GroupAddViewModel}">
+                <studentViews:GroupAddPage/>
+            </DataTemplate>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>

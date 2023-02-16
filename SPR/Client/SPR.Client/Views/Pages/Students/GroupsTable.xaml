@@ -13,10 +13,25 @@
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding Groups}" Background="AliceBlue" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" x:Name="courseFrame">
+        <ListView
+            x:Name="listView"
+            SelectionMode="Single"
+            SelectedItem="{Binding SelectedGroup}"
+            ItemsSource="{Binding Groups}" 
+            Background="AliceBlue" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Name}">Name</GridViewColumn>
+                    <GridViewColumn Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Command="{Binding Path=DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                                            Content="Delete" Click="SelectItemClick"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

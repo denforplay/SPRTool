@@ -18,6 +18,11 @@ namespace SPR.Client.Communication.Http
             var result = await _groupClient.PostAsJsonAsync<GroupModel>($"/Group/AddGroup", groupModel);
         }
 
+        public async Task DeleteGroup(Guid id)
+        {
+            await _groupClient.DeleteAsync($"/Group/DeleteGroupById?id={id}");
+        }
+
         public async Task<IReadOnlyCollection<GroupModel>> GetAllGroups()
         {
             var groups = await _groupClient.GetFromJsonAsync<IReadOnlyCollection<GroupModel>>($"/Group/GetAllGroups");

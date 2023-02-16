@@ -11,7 +11,6 @@ namespace SPR.Server.GroupMicroservice.Infrastructure.Repositories
 
         public FileGroupRepository(string filePath)
         {
-            _groups = new List<Group>();
             _filePath = filePath;
             if (File.Exists(_filePath))
             {
@@ -20,6 +19,11 @@ namespace SPR.Server.GroupMicroservice.Infrastructure.Repositories
                     JsonSerializer serializer = new JsonSerializer();
                     _groups = (List<Group>)serializer.Deserialize(file, typeof(List<Group>));
                 }
+            }
+
+            if (_groups is null)
+            {
+                _groups = new List<Group>();
             }
         }
 
@@ -74,6 +78,17 @@ namespace SPR.Server.GroupMicroservice.Infrastructure.Repositories
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, _groups);
             }
+        }
+
+        public void Delete(Guid id)
+        {
+            _groups.RemoveAll(x => x.Id == id);
+            Save();
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            Delete(id);
         }
     }
 }
