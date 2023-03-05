@@ -15,5 +15,10 @@ namespace SPR.Client.Abstractions.Core
         {
             CanExecuteChanged?.Invoke(this, new EventArgs());
         }
+
+        public void RaiseExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+        }
     }
 }

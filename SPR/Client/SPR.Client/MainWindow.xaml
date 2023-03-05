@@ -5,11 +5,13 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:pages="clr-namespace:SPR.Client.Views.Pages"
                   xmlns:viewModels="clr-namespace:SPR.Client.ViewModels"
+                  xmlns:authViewModels="clr-namespace:SPR.Client.ViewModels.Auth"
                   xmlns:courseViews="clr-namespace:SPR.Client.Views.Pages.Course"
                   xmlns:studentViews="clr-namespace:SPR.Client.Views.Pages.Students"
+                  xmlns:authViews="clr-namespace:SPR.Client.Views.Pages.Auth"
                   xmlns:buttons="clr-namespace:SPR.Client.Views.Buttons"
                   mc:Ignorable="d"
-                  Title="MainWindow" d:DesignHeight="450" d:DesignWidth="800" Height="Auto" Width="Auto">
+                  Title="MainWindow" d:DesignHeight="450" d:DesignWidth="800" Height="Auto" Width="Auto" >
 <Window.Resources>
         <Style x:Key="ButtonWithoutHover" TargetType="Button">
             <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -181,9 +183,10 @@
             <DataTemplate DataType="{x:Type viewModels:StudentManagementViewModel}">
                 <studentViews:StudentsPage />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type authViewModels:AuthViewModel}">
+                <authViews:AuthPage />
+            </DataTemplate>
         </Grid.Resources>
-        <!--// Background Color //-->
-
         <Grid Background="Black">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -196,13 +199,7 @@
                     Width="65"
                     Background="#2E333A">
                 <StackPanel Grid.Column="0" x:Name="st_pnl">
-
-                    <!--// Grid for the Menu Toggle Button //-->
-                    
                     <Grid Height="50">
-                        
-                        <!--// Menu title text //-->
-
                         <TextBlock  Grid.Row="1"
                                     Grid.Column="0"
                                     Margin="73,0,0,0"
@@ -213,21 +210,13 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Style="{StaticResource font_style}">
-                            
-                            <!--// Shadow Effect //-->
-
                             <TextBlock.Effect>
-
                                 <DropShadowEffect  BlurRadius="10"
                                                    ShadowDepth="1"
                                                    Direction="-90"
                                                    Color="White"/>
-
                             </TextBlock.Effect>
-                            
                         </TextBlock>
-                        
-
                         <ToggleButton x:Name="Tg_Btn"
                                       Grid.Column="0"
                                       VerticalAlignment="Center"
@@ -468,13 +457,13 @@
 
                             <StackPanel Orientation="Horizontal"
                                         Width="230" Height="50">
-
-                                <Image Source="Assets/img_signout.png"
-                                       Stretch="None"
-                                       Margin="15,0,0,0"/>
+                                <Button Command="{Binding AuthNavigationCommand}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Style="{StaticResource ButtonWithoutHover}">
+                                    <Image Source="Assets/img_signout.png" Stretch="None">
+                                    </Image>
+                                </Button>
 
                                 <TextBlock Text="Sign Out"
-                                           Margin="25,0,0,0"
+                                           Margin="15,0,0,0"
                                            Style="{StaticResource font_style}"/>
 
                             </StackPanel>
@@ -552,8 +541,6 @@
                     </ListView>
                     
                 </StackPanel>
-                
-                
             </Grid>
             <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}"></ContentControl>
         </Grid>

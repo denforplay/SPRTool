@@ -8,20 +8,17 @@ namespace SPR.Server.GroupMicroservice.Infrastructure.Repositories
     {
         private List<Group> _groups;
         private readonly string _filePath;
+        private readonly FileWorker.FileWorker _fileWorker;
 
-        public FileGroupRepository(string filePath)
+        public FileGroupRepository(string filePath, FileWorker.FileWorker fileWorker)
         {
             _filePath = filePath;
-            if (File.Exists(_filePath))
+            _fileWorker = fileWorker;
+            try
             {
-                using (StreamReader file = File.OpenText(_filePath))
-                {
-                    JsonSerializer serializer = new JsonSerializer();
-                    _groups = (List<Group>)serializer.Deserialize(file, typeof(List<Group>));
-                }
+                _groups = _fileWorker.Read<List<Group>>(_filePath);
             }
-
-            if (_groups is null)
+            catch(ArgumentNullException ex)
             {
                 _groups = new List<Group>();
             }
@@ -32,6 +29,7 @@ namespace SPR.Server.GroupMicroservice.Infrastructure.Repositories
             if (!_groups.Any(x => x.Id == group.Id))
             {
                 _groups.Add(group);
+                Save();
             }
         }
 
@@ -68,16 +66,7 @@ namespace SPR.Server.GroupMicroservice.Infrastructure.Repositories
 
         private void Save()
         {
-            if (File.Exists(_filePath))
-            {
-                File.Delete(_filePath);
-            }
-
-            using (StreamWriter file = File.CreateText(_filePath))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file, _groups);
-            }
+            _fileWorker.Write(_filePath, _groups);
         }
 
         public void Delete(Guid id)

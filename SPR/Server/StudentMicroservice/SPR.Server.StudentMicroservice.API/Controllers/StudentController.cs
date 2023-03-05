@@ -42,6 +42,7 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
             {
                 outputStudents.Add(new StudentModel()
                 {
+                    Id = student.Id,
                     Name = student.Name,
                     Surname = student.Surname,
                     Group = await _groupHttpService.ReadGroupByIdAsync(student.GroupId)
@@ -49,6 +50,13 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
             }
 
             return outputStudents;
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteStudentById(Guid id)
+        {
+            await _studentRepository.DeleteAsync(id);
+            return Ok();
         }
     }
 }

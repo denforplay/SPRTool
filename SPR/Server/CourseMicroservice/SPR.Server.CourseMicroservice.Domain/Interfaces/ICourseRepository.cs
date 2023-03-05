@@ -2,7 +2,7 @@
 
 namespace SPR.Server.CourseMicroservice.Domain.Interfaces
 {
-    internal interface ICourseRepository
+    public interface ICourseRepository
     {
         void Add(Course course);
     }

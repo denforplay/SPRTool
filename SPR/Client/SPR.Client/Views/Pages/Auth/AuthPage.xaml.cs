@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SPR.Client.Views.Pages.Students
+namespace SPR.Client.Views.Pages.Auth
 {
     /// <summary>
-    /// Interaction logic for GroupEditPage.xaml
+    /// Interaction logic for AuthPage.xaml
     /// </summary>
-    public partial class GroupEditPage : UserControl
+    public partial class AuthPage : UserControl
     {
-        public GroupEditPage()
+        public AuthPage()
         {
             InitializeComponent();
         }

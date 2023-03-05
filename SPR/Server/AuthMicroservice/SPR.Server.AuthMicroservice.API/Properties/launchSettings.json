@@ -1,12 +1,14 @@
-{
+﻿{
   "profiles": {
-    "SPR.Shared.Results": {
+    "http": {
       "commandName": "Project",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5207",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:63945;http://localhost:63946"
+      }
     }
   }
 }

@@ -6,6 +6,7 @@ using SPR.Client.Abstractions.Services;
 using SPR.Client.Communication.Http;
 using SPR.Client.Services.Navigation;
 using SPR.Client.ViewModels;
+using SPR.Client.ViewModels.Auth;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -23,6 +24,10 @@ namespace SPR.Client
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddSingleton<MainWindow>();
+                    services.AddHttpClient<IAuthHttpService, AuthHttpService>(config =>
+                    {
+                        config.BaseAddress = new Uri("http://localhost:5207");
+                    });
                     services.AddHttpClient<IGroupHttpService, GroupHttpService>(config =>
                     {
                         config.BaseAddress = new Uri("http://localhost:5052");
@@ -38,6 +43,7 @@ namespace SPR.Client
                             { typeof(HomeViewModel), () => new HomeViewModel() },
                             { typeof(CourseManagementViewModel), () => new CourseManagementViewModel() },
                             { typeof(StudentManagementViewModel), () => new StudentManagementViewModel(sp.GetRequiredService<IStudentHttpService>(), sp.GetRequiredService<IGroupHttpService>()) },
+                            { typeof(AuthViewModel), () => new AuthViewModel(sp.GetRequiredService<IAuthHttpService>()) },
                         })));
                 })
                 .Build();

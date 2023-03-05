@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Nugets\SPR.FileWorker\SPR.FileWorker.csproj" />
     <ProjectReference Include="..\SPR.Server.StudentMicroservice.Domain\SPR.Server.StudentMicroservice.Domain.csproj" />
   </ItemGroup>
 </Project>

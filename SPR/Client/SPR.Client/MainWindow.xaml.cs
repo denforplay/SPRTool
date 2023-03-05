@@ -16,7 +16,7 @@ namespace SPR.Client
         {
             _navigationService = navigationService;
             DataContext = new MainViewModel(_navigationService);
-            InitializeComponent();
+           InitializeComponent();
         }
         
         private void ListViewItem_MouseEnter(object sender, MouseEventArgs e)

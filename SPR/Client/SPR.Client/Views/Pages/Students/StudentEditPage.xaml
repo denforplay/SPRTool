@@ -248,13 +248,13 @@
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="0" Grid.Column="0" Text="Name"/>
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="0" Grid.Column="1" Text="Surname"/>
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="0" Grid.Column="2" Text="Group"/>
-        <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="1" Grid.Column="0"/>
-        <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="1" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="1" Grid.Column="0" Text="{Binding Path=StudentNameInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="1" Grid.Column="1" Text="{Binding Path=StudentSurnameInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <ComboBox Style="{DynamicResource ComboBoxStyle1}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="1" Grid.Column="2"
                   ItemsSource="{Binding Path=Groups}"
                   DisplayMemberPath="Name"
                   SelectedValue="{Binding Path=SelectedGroup}">
         </ComboBox>
-        <Button Grid.Row="3" Grid.Column="1" FontSize="40">Add</Button>
+        <Button Grid.Row="3" Grid.Column="1" FontSize="40" Command="{Binding AddStudentCommand}">Add</Button>
     </Grid>
 </UserControl>

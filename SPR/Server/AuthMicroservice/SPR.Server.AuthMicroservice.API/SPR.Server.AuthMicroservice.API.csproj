@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.27.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Nugets\SPR.FileWorker\SPR.FileWorker.csproj" />
+    <ProjectReference Include="..\..\..\Shared\SPR.Shared.Models\SPR.Shared.Models.csproj" />
+    <ProjectReference Include="..\SPR.Server.AuthMicroservice.Domain\SPR.Server.AuthMicroservice.Domain.csproj" />
+    <ProjectReference Include="..\SPR.Server.AuthMicroservice.Infrastructure\SPR.Server.AuthMicroservice.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

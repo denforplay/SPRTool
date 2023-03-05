@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="API\Responses\" />
-    <Folder Include="API\Requests\" />
   </ItemGroup>
 
 </Project>

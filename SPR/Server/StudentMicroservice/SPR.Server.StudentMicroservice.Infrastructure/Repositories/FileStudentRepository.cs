@@ -1,4 +1,6 @@
-﻿using SPR.Server.StudentMicroservice.Domain.Interfaces;
+﻿using Newtonsoft.Json;
+using SPR.FileWorker;
+using SPR.Server.StudentMicroservice.Domain.Interfaces;
 using SPR.Server.StudentMicroservice.Domain.Models;
 
 namespace SPR.Server.StudentMicroservice.Infrastructure.Repositories
@@ -6,12 +8,22 @@ namespace SPR.Server.StudentMicroservice.Infrastructure.Repositories
     public class FileStudentRepository : IStudentRepository
     {
         private List<Student> _students;
+        private readonly FileWorker.FileWorker _fileworker;
         private readonly string _filePath;
 
-        public FileStudentRepository(string filePath)
+        public FileStudentRepository(string filePath, FileWorker.FileWorker fileworker)
         {
-            _students = new List<Student>();
+            _fileworker = fileworker;
             _filePath = filePath;
+
+            try
+            {
+                _students = _fileworker.Read<List<Student>>(_filePath);
+            }
+            catch (ArgumentNullException ex)
+            {
+                _students = new List<Student>();
+            }
         }
 
         public void Add(Student student)
@@ -19,6 +31,7 @@ namespace SPR.Server.StudentMicroservice.Infrastructure.Repositories
             if (!_students.Any(x => x.Id == student.Id))
             {
                 _students.Add(student);
+                Save();
             }
         }
 
@@ -27,6 +40,7 @@ namespace SPR.Server.StudentMicroservice.Infrastructure.Repositories
             if (!_students.Any(x => x.Id == student.Id))
             {
                 _students.Add(student);
+                Save();
             }
 
             return Task.CompletedTask;
@@ -40,6 +54,27 @@ namespace SPR.Server.StudentMicroservice.Infrastructure.Repositories
         public Task<IReadOnlyCollection<Student>> ReadAllAsync()
         {
             return Task.FromResult<IReadOnlyCollection<Student>>(_students);
+        }
+
+        private void Save()
+        {
+            using (StreamWriter file = File.CreateText(_filePath))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, _students);
+            }
+        }
+
+        public void Delete(Guid id)
+        {
+            _students.RemoveAll(x => x.Id == id);
+            Save();
+        }
+
+        public Task DeleteAsync(Guid id)
+        {
+            Delete(id);
+            return Task.CompletedTask;
         }
     }
 }

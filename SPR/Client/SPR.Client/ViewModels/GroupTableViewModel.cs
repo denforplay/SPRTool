@@ -13,13 +13,13 @@ namespace SPR.Client.ViewModels
         private readonly IGroupHttpService _groupHttpService;
         private ObservableCollection<GroupModel> _groups;
         private GroupModel _selectedGroup;
-        public ICommand DeleteCommand { get; }
+        public ActionCommand DeleteCommand { get; }
 
         public GroupTableViewModel(IGroupHttpService groupHttpService)
         {
             _groupHttpService = groupHttpService;
             LoadGroups();
-            DeleteCommand = new ActionCommand(DeleteAsync);
+            DeleteCommand = new ActionCommand(async () => await DeleteAsync());
         }
 
         public GroupModel SelectedGroup
@@ -29,6 +29,7 @@ namespace SPR.Client.ViewModels
             {
                 _selectedGroup = value;
                 OnPropertyChanged(nameof(SelectedGroup));
+                DeleteCommand.RaiseExecuteChanged();
             }
         }
 
@@ -42,13 +43,10 @@ namespace SPR.Client.ViewModels
             }
         }
 
-        private async void DeleteAsync()
+        private async Task DeleteAsync()
         {
-            if (SelectedGroup is not null)
-            {
-                await _groupHttpService.DeleteGroup(SelectedGroup.Id);
-                _groups.Remove(SelectedGroup);
-            }
+            await _groupHttpService.DeleteGroup(SelectedGroup.Id);
+            _groups.Remove(SelectedGroup);
         }
 
         private async Task LoadGroups()

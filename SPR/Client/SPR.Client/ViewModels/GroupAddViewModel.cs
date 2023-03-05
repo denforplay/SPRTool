@@ -27,7 +27,7 @@ namespace SPR.Client.ViewModels
             set
             {
                 _groupName = value;
-                OnPropertyChanged(_groupName);
+                OnPropertyChanged(GroupName);
             }
         }
 
