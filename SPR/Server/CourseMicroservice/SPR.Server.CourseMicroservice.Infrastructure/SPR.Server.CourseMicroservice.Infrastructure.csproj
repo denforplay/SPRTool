@@ -8,4 +8,8 @@
   <ItemGroup>
 	  <InternalsVisibleTo Include="SPR.Server.CourseMicroservice.API" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Nugets\SPR.FileWorker\SPR.FileWorker.csproj" />
+    <ProjectReference Include="..\SPR.Server.CourseMicroservice.Domain\SPR.Server.CourseMicroservice.Domain.csproj" />
+  </ItemGroup>
 </Project>

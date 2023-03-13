@@ -2,9 +2,8 @@
 
 namespace SPR.Shared.Models.Course
 {
-    public class CourseModel
+    public class CreateCourseModel
     {
-        public Guid Id { get; set; }
         public String Name { get; set; } = null!;
         public IReadOnlyCollection<GroupModel>? Groups { get; set; }
     }

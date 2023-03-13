@@ -29,6 +29,10 @@ namespace SPR.Client
                     {
                         config.BaseAddress = new Uri("http://localhost:5207");
                     });
+                    services.AddHttpClient<ICourseHttpService, CourseHttpService>(config =>
+                    {
+                        config.BaseAddress = new Uri("http://localhost:5051");
+                    });
                     services.AddHttpClient<IGroupHttpService, GroupHttpService>(config =>
                     {
                         config.BaseAddress = new Uri("http://localhost:5052");
