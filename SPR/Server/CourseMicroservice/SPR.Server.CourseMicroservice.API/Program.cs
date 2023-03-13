@@ -17,7 +17,7 @@ builder.Services.AddHttpClient<IGroupHttpService, GroupHttpService>(config =>
 {
     config.BaseAddress = new Uri(groupMicroserviceAddress);
 });
-builder.Services.AddSingleton(sp => new CourseFileRepository(filePath, sp.GetRequiredService<FileWorker>()));
+builder.Services.AddSingleton<ICourseRepository, CourseFileRepository>(sp => new CourseFileRepository(filePath, sp.GetRequiredService<FileWorker>()));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

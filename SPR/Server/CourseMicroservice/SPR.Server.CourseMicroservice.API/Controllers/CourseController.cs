@@ -19,7 +19,7 @@ namespace SPR.Server.CourseMicroservice.API.Controllers
         }
 
         [HttpPost]
-        public async Task<CourseModel> AddCourse(CreateCourseModel courseModel)
+        public async Task<CourseModel> AddCourse([FromBody] CreateCourseModel courseModel)
         {
             var newCourse = new Course
             {
@@ -34,6 +34,7 @@ namespace SPR.Server.CourseMicroservice.API.Controllers
             {
                 Id = newCourse.Id,
                 Name = newCourse.Name,
+                Groups = courseModel.Groups
             };
         }
 

@@ -45,8 +45,11 @@ namespace SPR.Client.ViewModels
 
         private void SetStudentEditMode()
         {
-            CurrentTable = new StudentTableViewModel(_studentHttpService);
-            CurrentEditWindow = new StudentEditViewModel(_studentHttpService, _groupHttpService);
+            var currentTable = new StudentTableViewModel(_studentHttpService);
+            var currentEditWindow = new StudentEditViewModel(_studentHttpService, _groupHttpService);
+            currentEditWindow.OnStudentAdded += createdStudent => currentTable.Students.Add(createdStudent);
+            CurrentTable = currentTable;
+            CurrentEditWindow = currentEditWindow;
         }
 
         private void SetGroupEditMode()

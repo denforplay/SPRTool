@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="SPR.Client.Views.Pages.Course.CourseTable"
+﻿<UserControl x:Class="SPR.Client.Views.Pages.Course.CourseChoosedGroupsTable"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SPR.Client.Views.Pages.Course"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="400" Width="Auto" Height="Auto">
+             d:DesignHeight="800" d:DesignWidth="450">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -16,22 +16,12 @@
         <ListView
             x:Name="listView"
             SelectionMode="Single"
-            SelectedItem="{Binding SelectedCourse}"
-            ItemsSource="{Binding Courses}" 
+            SelectedItem="{Binding SelectedGroup}"
+            ItemsSource="{Binding ChoosedGroups}" 
             Background="AliceBlue" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Name}" Header="Name"/>
-                    <GridViewColumn Width="Auto" Header="Groups">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <ComboBox 
-                                    ItemsSource="{Binding Groups}"
-                                    DisplayMemberPath="Name">
-                                </ComboBox>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Name}">Name</GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

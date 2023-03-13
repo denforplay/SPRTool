@@ -5,7 +5,7 @@ namespace SPR.Client.Abstractions.Http
     public interface IStudentHttpService
     {
         Task<IReadOnlyCollection<StudentModel>> GetAllStudents();
-        Task AddStudent(StudentModel studentModel);
+        Task<StudentModel> AddStudent(StudentCreateModel studentModel);
         Task DeleteStudent(Guid id);
     }
 }

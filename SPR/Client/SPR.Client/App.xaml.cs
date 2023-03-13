@@ -48,7 +48,7 @@ namespace SPR.Client
                             { typeof(HomeViewModel), () => new HomeViewModel() },
                             { typeof(StudentManagementViewModel), () => new StudentManagementViewModel(sp.GetRequiredService<IStudentHttpService>(), sp.GetRequiredService<IGroupHttpService>()) },
                             { typeof(AuthViewModel), () => new AuthViewModel(sp.GetRequiredService<IAuthHttpService>()) },
-                            { typeof(CourseViewModel), () => new CourseViewModel() },
+                            { typeof(CourseViewModel), () => new CourseViewModel(sp.GetRequiredService<IGroupHttpService>(), sp.GetRequiredService<ICourseHttpService>()) },
                         })));
                 })
                 .Build();

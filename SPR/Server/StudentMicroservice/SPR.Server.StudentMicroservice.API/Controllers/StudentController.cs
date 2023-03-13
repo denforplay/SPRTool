@@ -19,17 +19,25 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddStudent(StudentModel studentModel)
+        public async Task<StudentModel> AddStudent(StudentCreateModel studentModel)
         {
-            await _studentRepository.AddAsync(new Student
+            var createdStudent = new Student
             {
                 Id = Guid.NewGuid(),
                 GroupId = studentModel.Group.Id,
                 Name = studentModel.Name,
                 Surname = studentModel.Surname,
-            });
+            };
 
-            return Ok();
+            await _studentRepository.AddAsync(createdStudent);
+
+            return new StudentModel 
+            {
+                Id = createdStudent.Id,
+                Group = studentModel.Group,
+                Name = createdStudent.Name,
+                Surname = createdStudent.Surname
+            };
         }
 
         [HttpGet]
@@ -55,7 +63,14 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteStudentById(Guid id)
         {
-            await _studentRepository.DeleteAsync(id);
+            await _studentRepository.DeleteByConditionAsync(x => x.Id == id);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteStudentsFromGroup(Guid groupId)
+        {
+            await _studentRepository.DeleteByConditionAsync(x => x.GroupId == groupId);
             return Ok();
         }
     }

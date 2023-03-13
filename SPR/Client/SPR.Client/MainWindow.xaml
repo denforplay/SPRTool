@@ -366,7 +366,7 @@
 
                             <StackPanel Orientation="Horizontal"
                                         Width="230" Height="50">
-                                <Button Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Style="{StaticResource ButtonWithoutHover}">
+                                <Button Background="{x:Null}" Command="{Binding CourseNavigationCommand}" BorderBrush="{x:Null}" Foreground="{x:Null}" Style="{StaticResource ButtonWithoutHover}">
                                     <Image Source="Assets/img_courses.png" Width="30" Height="30"
                                        Stretch="None"/>
                                 </Button>

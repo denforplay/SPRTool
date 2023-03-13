@@ -35,9 +35,9 @@ namespace SPR.Server.CourseMicroservice.Infrastructure.Repositories
             }
         }
 
-        public Task AddAsync(Course course)
+        public async Task AddAsync(Course course)
         {
-            return Task.FromResult(Add);
+            Add(course);
         }
 
         public void Delete(Guid id)
