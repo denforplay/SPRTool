@@ -17,15 +17,21 @@ namespace SPR.Server.GroupMicroservice.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddGroup(GroupModel groupModel)
+        public async Task<GroupModel> AddGroup(CreateGroupModel groupModel)
         {
-            await _groupRepository.AddAsync(new Group
+            var newGroup = new Group
             {
                 Id = Guid.NewGuid(),
                 Name = groupModel.Name
-            });
+            };
 
-            return Ok();
+            await _groupRepository.AddAsync(newGroup);
+
+            return new GroupModel()
+            {
+                Id = newGroup.Id,
+                Name = newGroup.Name
+            };
         }
 
         [HttpGet]

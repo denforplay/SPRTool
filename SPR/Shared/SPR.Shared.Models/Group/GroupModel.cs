@@ -1,4 +1,5 @@
-﻿namespace SPR.Shared.Models.Group
+﻿
+namespace SPR.Shared.Models.Group
 {
     public class GroupModel
     {

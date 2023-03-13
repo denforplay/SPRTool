@@ -4,7 +4,6 @@ using SPR.Client.Commands;
 using SPR.Shared.Models.Group;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace SPR.Client.ViewModels
 {

@@ -6,16 +6,20 @@ using SPR.Shared.Models.Student;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Windows.Input;
+using System.Windows;
 
 namespace SPR.Client.ViewModels
 {
     public class StudentEditViewModel : ViewModelBase
     {
-        public ActionCommand AddStudentCommand { get; }
-        public ActionCommand AddGroupCommand { get; }
+        public CommandBase AddStudentCommand { get; }
+        public CommandBase OpenAddGroupMenuCommand { get; }
+        public CommandBase CloseAddGroupMenuCommand { get; }
+        public CommandBase AddGroupFromMenuCommand { get; }
         private readonly IStudentHttpService _studentHttpService;
         private readonly IGroupHttpService _groupHttpService;
+        private bool _isAddGroupMenuOpened;
+        private string _newGroupName;
         private string _studentNameInput;
         private string _studentSurnameInput;
         private GroupModel _selectedGroup;
@@ -25,8 +29,56 @@ namespace SPR.Client.ViewModels
         {
             _studentHttpService = studentHttpService;
             _groupHttpService = groupHttpService;
-            AddStudentCommand = new ActionCommand(() => Task.Run(async () => await AddStudentAsync()), CanAddStudent);
+            AddStudentCommand = new ActionCommand(() => Application.Current.Dispatcher.Invoke(async () => await AddStudentAsync()), CanAddStudent);
+            OpenAddGroupMenuCommand = new ActionCommand(OpenAddGroupMenu, CanOpenAddGroupMenu);
+            CloseAddGroupMenuCommand = new ActionCommand(CloseAddGroupMenu, CanCloseAddGroupMenu);
+            AddGroupFromMenuCommand = new ActionCommand(() => Application.Current.Dispatcher.Invoke(async () => await AddGroupFromMenu()), CanAddGroupFromMenu);
             Task.Run(async () => await LoadGroupsAndStudents());
+        }
+
+        private async Task AddGroupFromMenu()
+        {
+            var createGroupModel = new CreateGroupModel
+            {
+                Name = NewGroupName
+            };
+
+            var result = await _groupHttpService.AddGroup(createGroupModel);
+            try
+            {
+                Groups.Add(result);
+            }
+            catch(Exception ex)
+            {
+
+            }
+            SelectedGroup = result;
+            CloseAddGroupMenuCommand.Execute(null);
+        }
+
+        private bool CanAddGroupFromMenu()
+        {
+            return _isAddGroupMenuOpened && !string.IsNullOrEmpty(NewGroupName);
+        }
+
+        private void CloseAddGroupMenu()
+        {
+            IsAddGroupMenuOpened = false;
+        }
+
+        private bool CanCloseAddGroupMenu()
+        {
+            return _isAddGroupMenuOpened;
+        }
+
+        private void OpenAddGroupMenu()
+        {
+            IsAddGroupMenuOpened = true;
+        }
+
+        private bool CanOpenAddGroupMenu()
+        {
+            return !_isAddGroupMenuOpened;
         }
 
         private bool CanAddStudent()
@@ -53,6 +105,29 @@ namespace SPR.Client.ViewModels
         {
             var loadedGroups = await _groupHttpService.GetAllGroups();
             Groups = new ObservableCollection<GroupModel>(loadedGroups);
+        }
+
+        public bool IsAddGroupMenuOpened
+        {
+            get => _isAddGroupMenuOpened;
+            set
+            {
+                _isAddGroupMenuOpened = value;
+                OnPropertyChanged(nameof(IsAddGroupMenuOpened));
+                CloseAddGroupMenuCommand.RaiseExecuteChanged();
+                OpenAddGroupMenuCommand.RaiseExecuteChanged();
+            }
+        }
+
+        public String NewGroupName
+        {
+            get => _newGroupName;
+            set
+            {
+                _newGroupName = value;
+                OnPropertyChanged(nameof(NewGroupName));
+                AddGroupFromMenuCommand.RaiseExecuteChanged();
+            }
         }
 
         public string StudentNameInput

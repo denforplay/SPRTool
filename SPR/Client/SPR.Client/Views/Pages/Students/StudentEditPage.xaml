@@ -177,7 +177,31 @@
                                     </Canvas>
                                     <Grid>
                                         <StackPanel Orientation="Vertical">
-                                            <Button Content="Add group" Command="{Binding Path=DataContext.AddGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"></Button>
+                                            <Button x:Name="AddGroupButton" Content="Add group" Command="{Binding Path=DataContext.OpenAddGroupMenuCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"/>
+                                            <Popup 
+                                                x:Name="ContextPopup"
+                                                StaysOpen="True"
+                                                IsOpen="{Binding Path=DataContext.IsAddGroupMenuOpened, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                Placement="MousePoint">
+                                                <Grid Background="White">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="5*"/>
+                                                        <ColumnDefinition Width="5*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">Add group menu</TextBlock>
+                                                    <Button Content="X" Background="Red" Grid.Row="0" Grid.Column="2" Command="{Binding Path=DataContext.CloseAddGroupMenuCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"/>
+                                                    <Label Content="Group name" Grid.Row="1" Grid.Column="0"/>
+                                                    <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Path=DataContext.NewGroupName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Content="Add new group"
+                                                            Command="{Binding Path=DataContext.AddGroupFromMenuCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"/>
+                                                </Grid>
+                                            </Popup>
                                             <ItemsPresenter x:Name="ItemsPresenter" 
                                                     KeyboardNavigation.DirectionalNavigation="Contained" 
                                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
@@ -251,9 +275,10 @@
         <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="1" Grid.Column="0" Text="{Binding Path=StudentNameInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="1" Grid.Column="1" Text="{Binding Path=StudentSurnameInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <ComboBox Style="{DynamicResource ComboBoxStyle1}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="1" Grid.Column="2"
-                  ItemsSource="{Binding Path=Groups}"
+                  ItemsSource="{Binding Path=Groups, Mode=TwoWay}"
                   DisplayMemberPath="Name"
-                  SelectedValue="{Binding Path=SelectedGroup}">
+                  SelectedValue="{Binding Path=SelectedGroup, Mode=TwoWay}"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible">
         </ComboBox>
         <Button Grid.Row="3" Grid.Column="1" FontSize="40" Command="{Binding AddStudentCommand}">Add</Button>
     </Grid>

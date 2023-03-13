@@ -17,6 +17,6 @@
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="0" Grid.Column="0" Text="Name"/>
         <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="1" Grid.Column="0" Text="{Binding Path=GroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <Button Grid.Row="3" Grid.Column="0" FontSize="40" Command="{Binding AddGroupCommand}">Add group</Button>
+        <Button Grid.Row="3" Grid.Column="0" FontSize="40" Command="{Binding AddGroupCommand}" Content="Add group"/>
     </Grid>
 </UserControl>

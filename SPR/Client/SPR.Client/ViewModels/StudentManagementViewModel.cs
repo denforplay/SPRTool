@@ -51,8 +51,11 @@ namespace SPR.Client.ViewModels
 
         private void SetGroupEditMode()
         {
-            CurrentTable = new GroupTableViewModel(_groupHttpService);
-            CurrentEditWindow = new GroupAddViewModel(_groupHttpService);
+            var currentTable = new GroupTableViewModel(_groupHttpService);
+            var currentEditWindow = new GroupAddViewModel(_groupHttpService);
+            currentEditWindow.OnGroupAdded += createdGroup => currentTable.Groups.Add(createdGroup);
+            CurrentTable = currentTable;
+            CurrentEditWindow = currentEditWindow;
         }
     }
 }

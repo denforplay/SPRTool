@@ -13,12 +13,12 @@ namespace SPR.Client.ViewModels
         private readonly IGroupHttpService _groupHttpService;
         private string _groupName;
 
-        public ICommand AddGroupCommand { get; }
+        public CommandBase AddGroupCommand { get; }
 
         public GroupAddViewModel(IGroupHttpService groupHttpService)
         {
             _groupHttpService = groupHttpService;
-            AddGroupCommand = new ActionCommand(AddGroupAction);
+            AddGroupCommand = new ActionCommand(AddGroupAction, CanAddGroup);
         }
 
         public string GroupName
@@ -28,6 +28,7 @@ namespace SPR.Client.ViewModels
             {
                 _groupName = value;
                 OnPropertyChanged(GroupName);
+                AddGroupCommand.RaiseExecuteChanged();
             }
         }
 
@@ -35,15 +36,20 @@ namespace SPR.Client.ViewModels
         {
             if (!String.IsNullOrEmpty(GroupName))
             {
-                var newGroup = new GroupModel
+                var newGroup = new CreateGroupModel
                 {
                     Name = GroupName
                 };
 
-                await _groupHttpService.AddGroup(newGroup);
+                var createdGroup = await _groupHttpService.AddGroup(newGroup);
                 GroupName = String.Empty;
-                OnGroupAdded?.Invoke(newGroup);
+                OnGroupAdded?.Invoke(createdGroup);
             }
+        }
+
+        private bool CanAddGroup()
+        {
+            return !string.IsNullOrEmpty(GroupName);
         }
     }
 }

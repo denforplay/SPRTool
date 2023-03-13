@@ -13,9 +13,11 @@ namespace SPR.Client.Communication.Http
             _groupClient = groupClient;
         }
 
-        public async Task AddGroup(GroupModel groupModel)
+        public async Task<GroupModel> AddGroup(CreateGroupModel groupModel)
         {
-            var result = await _groupClient.PostAsJsonAsync<GroupModel>($"/Group/AddGroup", groupModel);
+            var result = await _groupClient.PostAsJsonAsync<CreateGroupModel>($"/Group/AddGroup", groupModel);
+            var createdModel = await result.Content.ReadFromJsonAsync<GroupModel>();
+            return createdModel;
         }
 
         public async Task DeleteGroup(Guid id)

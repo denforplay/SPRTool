@@ -3,7 +3,7 @@
     "SPR.Server.StudentMicroservice.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5053",
       "environmentVariables": {
