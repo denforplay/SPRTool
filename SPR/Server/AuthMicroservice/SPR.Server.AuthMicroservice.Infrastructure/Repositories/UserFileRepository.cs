@@ -14,7 +14,6 @@ namespace SPR.Server.AuthMicroservice.Infrastructure.Repositories
         {
             _filePath = filePath;
             _fileWorker = fileWorker;
-            _filePath = filePath;
 
             try
             {
