@@ -2,6 +2,7 @@
 using SPR.FileWorker;
 using SPR.Server.CourseMicroservice.Domain.Interfaces;
 using SPR.Server.CourseMicroservice.Domain.Models;
+using Task = System.Threading.Tasks.Task;
 
 namespace SPR.Server.CourseMicroservice.Infrastructure.Repositories
 {

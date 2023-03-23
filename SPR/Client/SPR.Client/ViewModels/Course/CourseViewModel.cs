@@ -28,6 +28,5 @@ namespace SPR.Client.ViewModels.Course
 
         public CourseTableViewModel CourseTableViewModel => _courseTableViewModel;
         public CourseAddViewModel CourseAddViewModel => _courseAddViewModel;
-        
     }
 }

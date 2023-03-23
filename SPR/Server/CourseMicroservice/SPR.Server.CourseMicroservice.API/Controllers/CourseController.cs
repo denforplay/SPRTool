@@ -25,6 +25,7 @@ namespace SPR.Server.CourseMicroservice.API.Controllers
             {
                 Id = Guid.NewGuid(),
                 Name = courseModel.Name,
+                Tasks = courseModel.Tasks.Select(task => new Domain.Models.Task { Name = task.Name }).ToList(),
                 Groups = courseModel.Groups is null ? new List<Guid>() : courseModel.Groups.Select(x => x.Id).ToList()
             };
 
@@ -34,7 +35,8 @@ namespace SPR.Server.CourseMicroservice.API.Controllers
             {
                 Id = newCourse.Id,
                 Name = newCourse.Name,
-                Groups = courseModel.Groups
+                Groups = courseModel.Groups,
+                Tasks = courseModel.Tasks
             };
         }
 
@@ -64,7 +66,8 @@ namespace SPR.Server.CourseMicroservice.API.Controllers
                 {
                     Id = course.Id,
                     Name = course.Name,
-                    Groups = courseGroups
+                    Groups = courseGroups,
+                    Tasks = course.Tasks.Select(x => new TaskModel { Name = x.Name }).ToList()
                 });
             }
 

@@ -8,6 +8,7 @@ using SPR.Client.Services.Navigation;
 using SPR.Client.ViewModels;
 using SPR.Client.ViewModels.Auth;
 using SPR.Client.ViewModels.Course;
+using SPR.Client.ViewModels.Management;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -49,6 +50,7 @@ namespace SPR.Client
                             { typeof(StudentManagementViewModel), () => new StudentManagementViewModel(sp.GetRequiredService<IStudentHttpService>(), sp.GetRequiredService<IGroupHttpService>()) },
                             { typeof(AuthViewModel), () => new AuthViewModel(sp.GetRequiredService<IAuthHttpService>()) },
                             { typeof(CourseViewModel), () => new CourseViewModel(sp.GetRequiredService<IGroupHttpService>(), sp.GetRequiredService<ICourseHttpService>()) },
+                            { typeof(ManagementViewModel), () => new ManagementViewModel() }
                         })));
                 })
                 .Build();

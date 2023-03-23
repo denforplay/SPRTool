@@ -3,6 +3,7 @@ using SPR.Client.Abstractions.Services;
 using SPR.Client.Commands;
 using SPR.Client.ViewModels.Auth;
 using SPR.Client.ViewModels.Course;
+using SPR.Client.ViewModels.Management;
 using System.Windows.Input;
 
 namespace SPR.Client.ViewModels
@@ -15,7 +16,7 @@ namespace SPR.Client.ViewModels
         public ICommand StudentManagementNavigationCommand { get; }
         public ICommand AuthNavigationCommand { get; }
         public ICommand CourseNavigationCommand { get; }
-
+        public ICommand ManagementNavigationCommand { get; }
 
         public ViewModelBase CurrentViewModel => _navigationService.CurrentViewModel;
 
@@ -26,6 +27,7 @@ namespace SPR.Client.ViewModels
             StudentManagementNavigationCommand = new NavigateCommand(_navigationService, typeof(StudentManagementViewModel));
             AuthNavigationCommand = new NavigateCommand(_navigationService, typeof(AuthViewModel));
             CourseNavigationCommand = new NavigateCommand(_navigationService, typeof(CourseViewModel));
+            ManagementNavigationCommand = new NavigateCommand(_navigationService, typeof(ManagementViewModel));
             _navigationService.OnViewModelChanged += OnCurrentViewModelChanged;
         }
 

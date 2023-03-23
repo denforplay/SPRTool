@@ -1,4 +1,5 @@
 ﻿using SPR.Server.CourseMicroservice.Domain.Models;
+using Task = System.Threading.Tasks.Task;
 
 namespace SPR.Server.CourseMicroservice.Domain.Interfaces
 {

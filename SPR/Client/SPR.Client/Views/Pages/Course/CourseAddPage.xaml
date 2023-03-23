@@ -20,6 +20,8 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="0" Grid.Column="0" Text="Name"/>
@@ -30,6 +32,9 @@
         <Button Command="{Binding MoveFromSelectedToAvailableCommand}" Grid.Row="3" Grid.Column="1" FontFamily="Marlett" FontSize="75" Content="5"/>
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.ColumnSpan="2" FontSize="40">Selected groups</TextBlock>
         <local:CourseChoosedGroupsTable DataContext="{Binding Path = CourseGroupChoosedGroupsTableViewModel}" Grid.Row="5" Grid.ColumnSpan="2"/>
-        <Button Command="{Binding AddCourseCommand}" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" FontSize="40" Content="Add course"/>
+        <TextBox Text="{Binding Path=TaskName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="6" Grid.Column="0" MinWidth="150"/>
+        <Button Command="{Binding AddTaskCommand}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" FontSize="40" Content="Add task"/>
+        <local:CourseTaskTable DataContext="{Binding Path = TaskTableViewModel}" Grid.Row="7" Grid.ColumnSpan="2"></local:CourseTaskTable>
+        <Button Command="{Binding AddCourseCommand}" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" FontSize="40" Content="Add course"/>
     </Grid>
 </UserControl>

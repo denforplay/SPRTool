@@ -15,14 +15,17 @@ namespace SPR.Client.ViewModels.Course
         private readonly CommandBase _moveFromSelectedToAvailableCommand;
         private readonly CommandBase _moveFromAvailableToSelectedCommand;
         private readonly CommandBase _addCourseCommand;
+        private readonly CommandBase _addTaskCommand;
 
         private readonly CourseGroupAvailableTableViewModel _courseGroupAvailableTableViewModel;
         private readonly CourseChoosedGroupsTableViewModel _courseGroupChoosedGroupsTableViewModel;
+        private readonly TaskTableViewModel _taskTableViewModel;
 
         private readonly IGroupHttpService _groupHttpService;
         private readonly ICourseHttpService _courseHttpService;
 
         private string _courseName;
+        private string _taskName;
 
         public CourseAddViewModel(ICourseHttpService courseHttpService, IGroupHttpService groupHttpService)
         {
@@ -30,16 +33,20 @@ namespace SPR.Client.ViewModels.Course
             _courseHttpService = courseHttpService;
             _courseGroupAvailableTableViewModel = new CourseGroupAvailableTableViewModel(groupHttpService);
             _courseGroupChoosedGroupsTableViewModel = new CourseChoosedGroupsTableViewModel();
+            _taskTableViewModel = new TaskTableViewModel();
             _moveFromAvailableToSelectedCommand = new ActionCommand(MoveFromAvailableToSelected);
             _moveFromSelectedToAvailableCommand = new ActionCommand(MoveFromSelectedToAvailable);
             _addCourseCommand = new ActionCommand(() => Application.Current.Dispatcher.Invoke(async () => await AddCourse()));
+            _addTaskCommand = new ActionCommand(AddTask, CanAddTask);
         }
 
+        public CommandBase AddTaskCommand => _addTaskCommand;
         public CommandBase AddCourseCommand => _addCourseCommand;
         public CommandBase MoveFromSelectedToAvailableCommand => _moveFromSelectedToAvailableCommand;
         public CommandBase MoveFromAvailableToSelectedCommand => _moveFromAvailableToSelectedCommand;
         public CourseGroupAvailableTableViewModel CourseGroupAvailableTableViewModel => _courseGroupAvailableTableViewModel;
         public CourseChoosedGroupsTableViewModel CourseGroupChoosedGroupsTableViewModel => _courseGroupChoosedGroupsTableViewModel;
+        public TaskTableViewModel TaskTableViewModel => _taskTableViewModel;
 
         public string CourseName
         {
@@ -50,7 +57,18 @@ namespace SPR.Client.ViewModels.Course
                 OnPropertyChanged(CourseName);
             }
         }
-        
+
+        public string TaskName
+        {
+            get => _taskName;
+            set
+            {
+                _taskName = value;
+                OnPropertyChanged(TaskName);
+                AddTaskCommand.RaiseExecuteChanged();
+            }
+        }
+
         private void MoveFromSelectedToAvailable()
         {
             if (CourseGroupChoosedGroupsTableViewModel.SelectedGroup is not null)
@@ -77,13 +95,27 @@ namespace SPR.Client.ViewModels.Course
             {
                 Name = CourseName,
                 Groups = CourseGroupChoosedGroupsTableViewModel.ChoosedGroups,
+                Tasks = TaskTableViewModel.Tasks
             };
 
             var model = await _courseHttpService.AddCourse(createdCourseModel);
             OnCourseAdded?.Invoke(model);
             CourseName = string.Empty;
+            TaskTableViewModel.Reload();
             CourseGroupChoosedGroupsTableViewModel.Reload();
             CourseGroupAvailableTableViewModel.Reload();
+        }
+
+        private void AddTask()
+        {
+            var task = new TaskModel { Name = _taskName };
+            _taskTableViewModel.Tasks.Add(task);
+            TaskName = string.Empty;
+        }
+
+        private bool CanAddTask()
+        {
+            return !string.IsNullOrEmpty(TaskName);
         }
     }
 }
