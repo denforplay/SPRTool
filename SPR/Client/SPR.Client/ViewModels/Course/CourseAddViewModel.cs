@@ -108,7 +108,7 @@ namespace SPR.Client.ViewModels.Course
 
         private void AddTask()
         {
-            var task = new TaskModel { Name = _taskName };
+            var task = new CreateTaskModel { Name = _taskName };
             _taskTableViewModel.Tasks.Add(task);
             TaskName = string.Empty;
         }

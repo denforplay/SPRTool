@@ -60,6 +60,26 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
             return outputStudents;
         }
 
+        [HttpGet]
+        public async Task<IReadOnlyCollection<StudentModel>> GetAllStudentsFromGroup(Guid groupId)
+        {
+            var students = (await _studentRepository.ReadAllAsync()).Where(x => x.GroupId == groupId);
+            var outputStudents = new List<StudentModel>();
+
+            foreach (var student in students)
+            {
+                outputStudents.Add(new StudentModel()
+                {
+                    Id = student.Id,
+                    Name = student.Name,
+                    Surname = student.Surname,
+                    Group = await _groupHttpService.ReadGroupByIdAsync(student.GroupId)
+                });
+            }
+
+            return outputStudents;
+        }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteStudentById(Guid id)
         {

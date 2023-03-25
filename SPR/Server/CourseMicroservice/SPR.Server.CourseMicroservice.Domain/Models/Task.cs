@@ -2,8 +2,7 @@
 {
     public class Task
     {
+        public Guid Id { get; set; }
         public string Name { get; set; } = null!;
-        public bool IsCompleted { get; set; }
-        public DateTime? CompletedDate { get; set; }
     }
 }

@@ -1,8 +1,7 @@
 ﻿namespace SPR.Shared.Models.Course
 {
-    public class TaskModel
+    public class CreateTaskModel
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
     }
 }

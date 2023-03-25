@@ -30,5 +30,11 @@ namespace SPR.Client.Communication.Http
             var students = await _studentClient.GetFromJsonAsync<IReadOnlyCollection<StudentModel>>($"/Student/GetAllStudents");
             return students;
         }
+
+        public async Task<IReadOnlyCollection<StudentModel>> GetAllStudentsFromGroup(Guid groupId)
+        {
+            var students = await _studentClient.GetFromJsonAsync<IReadOnlyCollection<StudentModel>>($"/Student/GetAllStudentsFromGroup?groupId={groupId}");
+            return students;
+        }
     }
 }

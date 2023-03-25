@@ -6,6 +6,6 @@ namespace SPR.Shared.Models.Course
     {
         public String Name { get; set; } = null!;
         public IReadOnlyCollection<GroupModel> Groups { get; set; }
-        public IReadOnlyCollection<TaskModel> Tasks { get; set; }
+        public IReadOnlyCollection<CreateTaskModel> Tasks { get; set; }
     }
 }

@@ -7,14 +7,14 @@ namespace SPR.Client.ViewModels.Course
 {
     public class TaskTableViewModel : ViewModelBase
     {
-        private ObservableCollection<TaskModel> _tasks;
+        private ObservableCollection<CreateTaskModel> _tasks;
 
         public TaskTableViewModel()
         {
-            _tasks = new ObservableCollection<TaskModel>();
+            _tasks = new ObservableCollection<CreateTaskModel>();
         }
 
-        public ObservableCollection<TaskModel> Tasks
+        public ObservableCollection<CreateTaskModel> Tasks
         {
             get => _tasks;
             set
