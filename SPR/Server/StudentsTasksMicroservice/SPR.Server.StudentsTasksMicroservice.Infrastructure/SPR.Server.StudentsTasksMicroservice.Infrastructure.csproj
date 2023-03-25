@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Nugets\SPR.FileWorker\SPR.FileWorker.csproj" />
+    <ProjectReference Include="..\SPR.Server.StudentsTasksMicroservice.Domain\SPR.Server.StudentsTasksMicroservice.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

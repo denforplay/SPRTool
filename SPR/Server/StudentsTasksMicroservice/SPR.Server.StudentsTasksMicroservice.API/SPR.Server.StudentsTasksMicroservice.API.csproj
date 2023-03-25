@@ -6,4 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Nugets\SPR.FileWorker\SPR.FileWorker.csproj" />
+    <ProjectReference Include="..\SPR.Server.StudentsTasksMicroservice.Domain\SPR.Server.StudentsTasksMicroservice.Domain.csproj" />
+    <ProjectReference Include="..\SPR.Server.StudentsTasksMicroservice.Infrastructure\SPR.Server.StudentsTasksMicroservice.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
