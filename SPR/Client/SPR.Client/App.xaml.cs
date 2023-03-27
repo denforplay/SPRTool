@@ -7,6 +7,8 @@ using SPR.Client.Communication.Http;
 using SPR.Client.Services.Navigation;
 using SPR.Client.ViewModels;
 using SPR.Client.ViewModels.Auth;
+using SPR.Client.ViewModels.Course;
+using SPR.Client.ViewModels.Management;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -28,6 +30,10 @@ namespace SPR.Client
                     {
                         config.BaseAddress = new Uri("http://localhost:5207");
                     });
+                    services.AddHttpClient<ICourseHttpService, CourseHttpService>(config =>
+                    {
+                        config.BaseAddress = new Uri("http://localhost:5051");
+                    });
                     services.AddHttpClient<IGroupHttpService, GroupHttpService>(config =>
                     {
                         config.BaseAddress = new Uri("http://localhost:5052");
@@ -36,14 +42,20 @@ namespace SPR.Client
                     {
                         config.BaseAddress = new Uri("http://localhost:5053");
                     });
+                    services.AddHttpClient<IStudentTaskHttpService, StudentTaskHttpService>(config =>
+                    {
+                        config.BaseAddress = new Uri("http://localhost:5178");
+                    });
+
                     services.AddSingleton<INavigationService>(sp => new NavigationService(new ViewModelsFactoryService(
                         new Dictionary<Type, Func<ViewModelBase>>()
                         {
                             { typeof(MainViewModel), () => new MainViewModel(sp.GetRequiredService<INavigationService>()) },
                             { typeof(HomeViewModel), () => new HomeViewModel() },
-                            { typeof(CourseManagementViewModel), () => new CourseManagementViewModel() },
                             { typeof(StudentManagementViewModel), () => new StudentManagementViewModel(sp.GetRequiredService<IStudentHttpService>(), sp.GetRequiredService<IGroupHttpService>()) },
                             { typeof(AuthViewModel), () => new AuthViewModel(sp.GetRequiredService<IAuthHttpService>()) },
+                            { typeof(CourseViewModel), () => new CourseViewModel(sp.GetRequiredService<IGroupHttpService>(), sp.GetRequiredService<ICourseHttpService>()) },
+                            { typeof(ManagementViewModel), () => new ManagementViewModel(sp.GetRequiredService<IStudentHttpService>(), sp.GetRequiredService<ICourseHttpService>(), sp.GetRequiredService<IStudentTaskHttpService>()) }
                         })));
                 })
                 .Build();

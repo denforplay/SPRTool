@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using SPR.FileWorker;
 using SPR.Server.StudentMicroservice.Domain.Interfaces;
 using SPR.Server.StudentMicroservice.Domain.Models;
 
@@ -65,15 +64,15 @@ namespace SPR.Server.StudentMicroservice.Infrastructure.Repositories
             }
         }
 
-        public void Delete(Guid id)
+        public void DeleteByCondition(Func<Student, bool> condition)
         {
-            _students.RemoveAll(x => x.Id == id);
+            _students.RemoveAll(x => condition(x));
             Save();
         }
 
-        public Task DeleteAsync(Guid id)
+        public Task DeleteByConditionAsync(Func<Student, bool> condition)
         {
-            Delete(id);
+            DeleteByCondition(condition);
             return Task.CompletedTask;
         }
     }

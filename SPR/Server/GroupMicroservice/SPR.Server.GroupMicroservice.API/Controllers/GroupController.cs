@@ -9,10 +9,12 @@ namespace SPR.Server.GroupMicroservice.API.Controllers
     [Route("[controller]/[action]")]
     public class GroupController : ControllerBase
     {
+        private readonly IStudentHttpService _studentHttpService;
         private readonly IGroupRepository _groupRepository;
 
-        public GroupController(IGroupRepository groupRepository)
+        public GroupController(IGroupRepository groupRepository, IStudentHttpService studentHttpService)
         {
+            _studentHttpService = studentHttpService;
             _groupRepository = groupRepository;
         }
 
@@ -88,6 +90,7 @@ namespace SPR.Server.GroupMicroservice.API.Controllers
         public async Task<IActionResult> DeleteGroupById(Guid id)
         {
             await _groupRepository.DeleteAsync(id);
+            await _studentHttpService.DeleteAllFromGroup(id);
             return Ok();
         }
     }

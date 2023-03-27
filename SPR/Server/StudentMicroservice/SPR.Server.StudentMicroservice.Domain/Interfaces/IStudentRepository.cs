@@ -6,8 +6,8 @@ namespace SPR.Server.StudentMicroservice.Domain.Interfaces
     {
         void Add(Student student);
         Task AddAsync(Student student);
-        void Delete(Guid id);
-        Task DeleteAsync(Guid id);
+        void DeleteByCondition(Func<Student, bool> condition);
+        Task DeleteByConditionAsync(Func<Student, bool> condition);
         IReadOnlyCollection<Student> ReadAll();
         Task<IReadOnlyCollection<Student>> ReadAllAsync();
     }

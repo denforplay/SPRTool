@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace SPR.Client.Views.Pages.Course
 {
     /// <summary>
-    /// Interaction logic for AddCoursePage.xaml
+    /// Interaction logic for CourseAddPage.xaml
     /// </summary>
-    public partial class AddCoursePage : UserControl
+    public partial class CourseAddPage : UserControl
     {
-        public AddCoursePage()
+        public CourseAddPage()
         {
             InitializeComponent();
         }

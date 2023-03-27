@@ -6,10 +6,13 @@
                   xmlns:pages="clr-namespace:SPR.Client.Views.Pages"
                   xmlns:viewModels="clr-namespace:SPR.Client.ViewModels"
                   xmlns:authViewModels="clr-namespace:SPR.Client.ViewModels.Auth"
+                  xmlns:courseViewModels="clr-namespace:SPR.Client.ViewModels.Course"
                   xmlns:courseViews="clr-namespace:SPR.Client.Views.Pages.Course"
                   xmlns:studentViews="clr-namespace:SPR.Client.Views.Pages.Students"
                   xmlns:authViews="clr-namespace:SPR.Client.Views.Pages.Auth"
                   xmlns:buttons="clr-namespace:SPR.Client.Views.Buttons"
+                  xmlns:managementViewModels="clr-namespace:SPR.Client.ViewModels.Management"
+                  xmlns:managementViews="clr-namespace:SPR.Client.Views.Pages.Management"
                   mc:Ignorable="d"
                   Title="MainWindow" d:DesignHeight="450" d:DesignWidth="800" Height="Auto" Width="Auto" >
 <Window.Resources>
@@ -177,14 +180,17 @@
             <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
                 <pages:HomePage/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModels:CourseManagementViewModel}">
-                <courseViews:CoursePage/>
-            </DataTemplate>
             <DataTemplate DataType="{x:Type viewModels:StudentManagementViewModel}">
                 <studentViews:StudentsPage />
             </DataTemplate>
             <DataTemplate DataType="{x:Type authViewModels:AuthViewModel}">
                 <authViews:AuthPage />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type courseViewModels:CourseViewModel}">
+                <courseViews:CoursePage/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type managementViewModels:ManagementViewModel}">
+                <managementViews:ManagementPage/>
             </DataTemplate>
         </Grid.Resources>
         <Grid Background="Black">
@@ -365,12 +371,12 @@
 
                             <StackPanel Orientation="Horizontal"
                                         Width="230" Height="50">
-                                <Button Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Style="{StaticResource ButtonWithoutHover}">
-                                    <Image Source="Assets/img_message.png"
+                                <Button Background="{x:Null}" Command="{Binding CourseNavigationCommand}" BorderBrush="{x:Null}" Foreground="{x:Null}" Style="{StaticResource ButtonWithoutHover}">
+                                    <Image Source="Assets/img_courses.png" Width="30" Height="30"
                                        Stretch="None"/>
                                 </Button>
                                 
-                                <TextBlock Text="Messages"
+                                <TextBlock Text="Courses"
                                            Margin="15,0,0,0"
                                            FontSize="32"
                                            Style="{StaticResource font_style}"/>
@@ -395,10 +401,10 @@
 
                             <StackPanel Orientation="Horizontal"
                                         Width="230" Height="50">
-
-                                <Image Source="Assets/img_map.png"
-                                       Stretch="None"
-                                       Margin="15,0,0,0"/>
+                                <Button Background="{x:Null}" Command="{Binding ManagementNavigationCommand}" BorderBrush="{x:Null}" Foreground="{x:Null}" Style="{StaticResource ButtonWithoutHover}">
+                                    <Image Source="Assets/img_map.png" Width="30" Height="30"
+                                       Stretch="None"/>
+                                </Button>
 
                                 <TextBlock Text="Maps"
                                            Margin="25,0,0,0"

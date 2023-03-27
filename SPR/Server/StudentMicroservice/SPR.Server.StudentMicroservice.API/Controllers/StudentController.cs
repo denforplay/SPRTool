@@ -11,25 +11,37 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
     {
         private readonly IStudentRepository _studentRepository;
         private readonly IGroupHttpService _groupHttpService;
+        private readonly IStudentTaskHttpService _studentTaskHttpService;
 
-        public StudentController(IStudentRepository studentRepository, IGroupHttpService groupHttpService)
+        public StudentController(IStudentRepository studentRepository, 
+            IGroupHttpService groupHttpService,
+            IStudentTaskHttpService studentTaskHttpService)
         {
             _studentRepository = studentRepository;
             _groupHttpService = groupHttpService;
+            _studentTaskHttpService = studentTaskHttpService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddStudent(StudentModel studentModel)
+        public async Task<StudentModel> AddStudent(StudentCreateModel studentModel)
         {
-            await _studentRepository.AddAsync(new Student
+            var createdStudent = new Student
             {
                 Id = Guid.NewGuid(),
                 GroupId = studentModel.Group.Id,
                 Name = studentModel.Name,
                 Surname = studentModel.Surname,
-            });
+            };
 
-            return Ok();
+            await _studentRepository.AddAsync(createdStudent);
+
+            return new StudentModel 
+            {
+                Id = createdStudent.Id,
+                Group = studentModel.Group,
+                Name = createdStudent.Name,
+                Surname = createdStudent.Surname
+            };
         }
 
         [HttpGet]
@@ -52,10 +64,44 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
             return outputStudents;
         }
 
+        [HttpGet]
+        public async Task<IReadOnlyCollection<StudentModel>> GetAllStudentsFromGroup(Guid groupId)
+        {
+            var students = (await _studentRepository.ReadAllAsync()).Where(x => x.GroupId == groupId);
+            var outputStudents = new List<StudentModel>();
+
+            foreach (var student in students)
+            {
+                outputStudents.Add(new StudentModel()
+                {
+                    Id = student.Id,
+                    Name = student.Name,
+                    Surname = student.Surname,
+                    Group = await _groupHttpService.ReadGroupByIdAsync(student.GroupId)
+                });
+            }
+
+            return outputStudents;
+        }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteStudentById(Guid id)
         {
-            await _studentRepository.DeleteAsync(id);
+            await _studentRepository.DeleteByConditionAsync(x => x.Id == id);
+            await _studentTaskHttpService.DeleteAllTasksForStudent(id);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteStudentsFromGroup(Guid groupId)
+        {
+            var studentsFromGroup = (await _studentRepository.ReadAllAsync()).Where(x => x.GroupId == groupId);
+            await _studentRepository.DeleteByConditionAsync(x => x.GroupId == groupId);
+            foreach(var studentFromGroup in studentsFromGroup)
+            {
+                await _studentTaskHttpService.DeleteAllTasksForStudent(studentFromGroup.Id);
+            }
+
             return Ok();
         }
     }

@@ -12,6 +12,8 @@ namespace SPR.Client.ViewModels
 {
     public class StudentEditViewModel : ViewModelBase
     {
+        public event Action<StudentModel> OnStudentAdded;
+
         public CommandBase AddStudentCommand { get; }
         public CommandBase OpenAddGroupMenuCommand { get; }
         public CommandBase CloseAddGroupMenuCommand { get; }
@@ -33,7 +35,7 @@ namespace SPR.Client.ViewModels
             OpenAddGroupMenuCommand = new ActionCommand(OpenAddGroupMenu, CanOpenAddGroupMenu);
             CloseAddGroupMenuCommand = new ActionCommand(CloseAddGroupMenu, CanCloseAddGroupMenu);
             AddGroupFromMenuCommand = new ActionCommand(() => Application.Current.Dispatcher.Invoke(async () => await AddGroupFromMenu()), CanAddGroupFromMenu);
-            Task.Run(async () => await LoadGroupsAndStudents());
+            Application.Current.Dispatcher.Invoke(async () => await LoadGroupsAndStudents());
         }
 
         private async Task AddGroupFromMenu()
@@ -90,15 +92,15 @@ namespace SPR.Client.ViewModels
 
         private async Task AddStudentAsync()
         {
-            var studentModel = new StudentModel
+            var studentModel = new StudentCreateModel
             {
                 Name = StudentNameInput,
                 Surname = StudentSurnameInput,
                 Group = SelectedGroup,
             };
 
-
-            await _studentHttpService.AddStudent(studentModel);
+            var createdModel = await _studentHttpService.AddStudent(studentModel);
+            OnStudentAdded?.Invoke(createdModel);
         }
 
         private async Task LoadGroupsAndStudents()

@@ -13,9 +13,11 @@ namespace SPR.Client.Communication.Http
             _studentClient = studentClient;
         }
 
-        public async Task AddStudent(StudentModel studentModel)
+        public async Task<StudentModel> AddStudent(StudentCreateModel studentModel)
         {
-            var result = await _studentClient.PostAsJsonAsync<StudentModel>($"/Student/AddStudent", studentModel);
+            var result = await _studentClient.PostAsJsonAsync<StudentCreateModel>($"/Student/AddStudent", studentModel);
+            var createdStudentModel = await result.Content.ReadFromJsonAsync<StudentModel>();
+            return createdStudentModel;
         }
 
         public async Task DeleteStudent(Guid id)
@@ -26,6 +28,12 @@ namespace SPR.Client.Communication.Http
         public async Task<IReadOnlyCollection<StudentModel>> GetAllStudents()
         {
             var students = await _studentClient.GetFromJsonAsync<IReadOnlyCollection<StudentModel>>($"/Student/GetAllStudents");
+            return students;
+        }
+
+        public async Task<IReadOnlyCollection<StudentModel>> GetAllStudentsFromGroup(Guid groupId)
+        {
+            var students = await _studentClient.GetFromJsonAsync<IReadOnlyCollection<StudentModel>>($"/Student/GetAllStudentsFromGroup?groupId={groupId}");
             return students;
         }
     }

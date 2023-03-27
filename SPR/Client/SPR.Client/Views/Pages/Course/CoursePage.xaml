@@ -5,21 +5,19 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:SPR.Client.Views.Pages.Course"
       xmlns:resources="clr-namespace:SPR.Client.Assets"
-      mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800" Height="Auto" Width="Auto">
+      mc:Ignorable="d" d:DesignHeight="1080" d:DesignWidth="1920" Height="Auto" Width="Auto">
     <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="3*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" FontSize="32" Text="{x:Static resources:text_en.CourseTitle}" VerticalAlignment="Center"/>
-        <ListView Grid.Row="1" Grid.Column="1">
-            <GridView>
-            </GridView>
-        </ListView>
-        <ContentControl Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" x:Name="courseFrame"></ContentControl>
+        <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="32" Text="{x:Static resources:text_en.CourseTitle}" VerticalAlignment="Center"/>
+        <local:CourseTable DataContext="{Binding Path = CourseTableViewModel}" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2"></local:CourseTable>
+        <local:CourseAddPage DataContext="{Binding Path = CourseAddViewModel}"  Grid.Column="1" Grid.Row="1" Grid.RowSpan="2"></local:CourseAddPage>
     </Grid>
 </UserControl>

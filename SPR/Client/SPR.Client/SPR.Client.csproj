@@ -10,14 +10,17 @@
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+      <PackageReference Include="unvell.ReoGridWPF.dll" Version="3.0.0" />
     </ItemGroup>
     <ItemGroup>
       <None Remove="Assets\closeBtn_default.png" />
+      <None Remove="Assets\img_courses.png" />
       <None Remove="Assets\img_management.png" />
       <Resource Include="Assets\closeBtn_default.png" />
       <None Remove="Assets\closeBtn_MouseOver.png" />
       <Resource Include="Assets\closeBtn_MouseOver.png" />
       <None Remove="Assets\img_background.png" />
+      <Resource Include="Assets\img_courses.png" />
       <Resource Include="Assets\img_management.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Resource>

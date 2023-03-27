@@ -3,7 +3,9 @@ using SPR.Client.Abstractions.Http;
 using SPR.Client.Commands;
 using SPR.Shared.Models.Student;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SPR.Client.ViewModels
@@ -11,7 +13,7 @@ namespace SPR.Client.ViewModels
     public class StudentTableViewModel : ViewModelBase
     {
         private readonly IStudentHttpService _studentHttpService;
-        private IReadOnlyCollection<StudentModel> _studentsModel;
+        private ObservableCollection<StudentModel> _studentsModel;
         private StudentModel _selectedStudent;
 
         public ActionCommand DeleteCommand { get; }
@@ -19,14 +21,14 @@ namespace SPR.Client.ViewModels
         public StudentTableViewModel(IStudentHttpService studentHttpService)
         {
             _studentHttpService = studentHttpService;
-            Task.Run(async () => await LoadStudents());
-            DeleteCommand = new ActionCommand(() => Task.Run(async() => await DeleteStudent()));
+            Application.Current.Dispatcher.Invoke(async () => await LoadStudents());
+            DeleteCommand = new ActionCommand(() => Application.Current.Dispatcher.Invoke(async() => await DeleteStudent()));
         }
 
         public async Task LoadStudents()
         {
             var response = await _studentHttpService.GetAllStudents();
-            Students = response;
+            Students = new ObservableCollection<StudentModel>(response);
         }
 
         private async Task DeleteStudent()
@@ -34,7 +36,7 @@ namespace SPR.Client.ViewModels
             await _studentHttpService.DeleteStudent(SelectedStudent.Id);
         }
 
-        public IReadOnlyCollection<StudentModel> Students
+        public ObservableCollection<StudentModel> Students
         {
             get => _studentsModel;
             set
