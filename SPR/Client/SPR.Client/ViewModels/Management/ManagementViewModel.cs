@@ -2,6 +2,8 @@
 using SPR.Client.Abstractions.Http;
 using SPR.Shared.Models.Course;
 using SPR.Shared.Models.Group;
+using SPR.Shared.Models.Student;
+using SPR.Shared.Models.StudentTask;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +16,7 @@ namespace SPR.Client.ViewModels.Management
 {
     public class ManagementViewModel : ViewModelBase
     {
+        private readonly IStudentTaskHttpService _studentTaskHttpService;
         private readonly IStudentHttpService _studentHttpService;
         private readonly ICourseHttpService _courseHttpService;
         private readonly ManagementCourseTableViewModel _managementCourseTableViewModel;
@@ -21,8 +24,9 @@ namespace SPR.Client.ViewModels.Management
 
         public ReoGridControl ReoGrid { get; set; }
         
-        public ManagementViewModel(IStudentHttpService studentHttpService, ICourseHttpService courseHttpService)
+        public ManagementViewModel(IStudentHttpService studentHttpService, ICourseHttpService courseHttpService, IStudentTaskHttpService studentTaskHttpService)
         {
+            _studentTaskHttpService = studentTaskHttpService;
             _studentHttpService = studentHttpService;
             _courseHttpService = courseHttpService;
             _managementCourseTableViewModel = new ManagementCourseTableViewModel(courseHttpService);
@@ -52,15 +56,43 @@ namespace SPR.Client.ViewModels.Management
 
             for (int i = 0; i < _currentCourseModel.Tasks.Count; i++)
             {
+                var task = _currentCourseModel.Tasks.ElementAt(i);
                 ReoGrid.CurrentWorksheet.Cells[0, i + 1].IsReadOnly = true;
-                ReoGrid.CurrentWorksheet[0, i + 1] = $"{_currentCourseModel.Tasks.ElementAt(i).Name}";
+                ReoGrid.CurrentWorksheet[0, i + 1] = $"{task.Name}";
 
                 for (int j = 0; j < students.Count; j++)
                 {
-                    var checkbox = new CheckBoxCell();
+                    var newJ = j;
+                    CheckBoxCell checkbox;
+                    var info = await _studentTaskHttpService.GetInfoAboutStudentTask(students[j].Id, task.Id);
+                    if (info.IsCompleted)
+                    {
+                        checkbox = new CheckBoxCell(true);
+                    }
+                    else
+                    {
+                        checkbox = new CheckBoxCell(false);
+                    }
+
+                    checkbox.CheckChanged += (_, _) => OnCheckChanged(students[newJ], task, checkbox.IsChecked);
                     ReoGrid.CurrentWorksheet[j + 1, i + 1] = new object[] { checkbox };
                 }
             }
+        }
+
+        private void OnCheckChanged(StudentModel studentModel, TaskModel taskModel, bool isCompleted)
+        {
+            var updateStudentTask = new CreateStudentTaskModel
+            {
+                StudentId = studentModel.Id,
+                TaskId = taskModel.Id,
+                IsCompleted = isCompleted
+            };
+
+            Application.Current.Dispatcher.Invoke(async () =>
+            {
+                var updatedTask = await _studentTaskHttpService.UpdateStudentTask(updateStudentTask);
+            });
         }
 
         private void OnCourseChanged(CourseModel courseModel)

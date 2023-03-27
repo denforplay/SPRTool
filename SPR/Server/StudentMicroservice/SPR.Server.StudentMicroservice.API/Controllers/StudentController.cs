@@ -11,11 +11,15 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
     {
         private readonly IStudentRepository _studentRepository;
         private readonly IGroupHttpService _groupHttpService;
+        private readonly IStudentTaskHttpService _studentTaskHttpService;
 
-        public StudentController(IStudentRepository studentRepository, IGroupHttpService groupHttpService)
+        public StudentController(IStudentRepository studentRepository, 
+            IGroupHttpService groupHttpService,
+            IStudentTaskHttpService studentTaskHttpService)
         {
             _studentRepository = studentRepository;
             _groupHttpService = groupHttpService;
+            _studentTaskHttpService = studentTaskHttpService;
         }
 
         [HttpPost]
@@ -84,13 +88,20 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
         public async Task<IActionResult> DeleteStudentById(Guid id)
         {
             await _studentRepository.DeleteByConditionAsync(x => x.Id == id);
+            await _studentTaskHttpService.DeleteAllTasksForStudent(id);
             return Ok();
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteStudentsFromGroup(Guid groupId)
         {
+            var studentsFromGroup = (await _studentRepository.ReadAllAsync()).Where(x => x.GroupId == groupId);
             await _studentRepository.DeleteByConditionAsync(x => x.GroupId == groupId);
+            foreach(var studentFromGroup in studentsFromGroup)
+            {
+                await _studentTaskHttpService.DeleteAllTasksForStudent(studentFromGroup.Id);
+            }
+
             return Ok();
         }
     }

@@ -10,5 +10,7 @@ namespace SPR.Server.StudentsTasksMicroservice.Domain.Interfaces
         Task UpdateAsync(StudentTask studentTask);
         void DeleteByCondition(Func<StudentTask, bool> condition);
         Task DeleteByConditionAsync(Func<StudentTask, bool> condition);
+        IReadOnlyCollection<StudentTask> ReadAll();
+        Task<IReadOnlyCollection<StudentTask>> ReadAllAsync();
     }
 }

@@ -42,6 +42,11 @@ namespace SPR.Client
                     {
                         config.BaseAddress = new Uri("http://localhost:5053");
                     });
+                    services.AddHttpClient<IStudentTaskHttpService, StudentTaskHttpService>(config =>
+                    {
+                        config.BaseAddress = new Uri("http://localhost:5178");
+                    });
+
                     services.AddSingleton<INavigationService>(sp => new NavigationService(new ViewModelsFactoryService(
                         new Dictionary<Type, Func<ViewModelBase>>()
                         {
@@ -50,7 +55,7 @@ namespace SPR.Client
                             { typeof(StudentManagementViewModel), () => new StudentManagementViewModel(sp.GetRequiredService<IStudentHttpService>(), sp.GetRequiredService<IGroupHttpService>()) },
                             { typeof(AuthViewModel), () => new AuthViewModel(sp.GetRequiredService<IAuthHttpService>()) },
                             { typeof(CourseViewModel), () => new CourseViewModel(sp.GetRequiredService<IGroupHttpService>(), sp.GetRequiredService<ICourseHttpService>()) },
-                            { typeof(ManagementViewModel), () => new ManagementViewModel(sp.GetRequiredService<IStudentHttpService>(), sp.GetRequiredService<ICourseHttpService>()) }
+                            { typeof(ManagementViewModel), () => new ManagementViewModel(sp.GetRequiredService<IStudentHttpService>(), sp.GetRequiredService<ICourseHttpService>(), sp.GetRequiredService<IStudentTaskHttpService>()) }
                         })));
                 })
                 .Build();

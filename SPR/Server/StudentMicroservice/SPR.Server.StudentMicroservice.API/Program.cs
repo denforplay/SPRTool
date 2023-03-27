@@ -8,12 +8,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 var filePath = builder.Configuration["StudentFilePath"];
 var groupMicroserviceAddress = builder.Configuration["GroupMicroserviceAddress"];
+var studentTaskMicroserviceAddress = builder.Configuration["StudentTaskMicroserviceAddress"];
 builder.Services.AddSingleton<FileWorker>();
 builder.Services.AddSingleton<IStudentRepository>(sp => new FileStudentRepository(filePath, sp.GetRequiredService<FileWorker>()));
 builder.Services.AddSingleton<IGroupHttpService, GroupHttpService>();
+builder.Services.AddSingleton<IStudentTaskHttpService, StudentTaskHttpService>();
 builder.Services.AddHttpClient<IGroupHttpService, GroupHttpService>(config =>
 {
     config.BaseAddress = new Uri(groupMicroserviceAddress);
+});
+
+builder.Services.AddHttpClient<IStudentTaskHttpService, StudentTaskHttpService>(config =>
+{
+    config.BaseAddress = new Uri(studentTaskMicroserviceAddress);
 });
 
 builder.Services.AddControllers();

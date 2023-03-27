@@ -65,6 +65,7 @@ namespace SPR.Server.StudentsTasksMicroservice.Infrastructure.Repositories
             return Task.CompletedTask;
         }
 
+
         private void Save()
         {
             using (StreamWriter file = File.CreateText(_filePath))
@@ -72,6 +73,16 @@ namespace SPR.Server.StudentsTasksMicroservice.Infrastructure.Repositories
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, _studentsTasks);
             }
+        }
+
+        public IReadOnlyCollection<StudentTask> ReadAll()
+        {
+            return _studentsTasks;
+        }
+
+        public async Task<IReadOnlyCollection<StudentTask>> ReadAllAsync()
+        {
+            return _studentsTasks;
         }
     }
 }

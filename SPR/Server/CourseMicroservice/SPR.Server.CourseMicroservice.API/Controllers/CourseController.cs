@@ -71,7 +71,7 @@ namespace SPR.Server.CourseMicroservice.API.Controllers
                     Id = course.Id,
                     Name = course.Name,
                     Groups = courseGroups,
-                    Tasks = course.Tasks.Select(x => new TaskModel { Name = x.Name }).ToList()
+                    Tasks = course.Tasks.Select(x => new TaskModel { Id = x.Id, Name = x.Name }).ToList()
                 });
             }
 
