@@ -1,6 +1,6 @@
-﻿namespace SPR.Shared.Models.StudentTask
+﻿namespace SPR.Server.StudentMicroservice.Domain.Models
 {
-    public class StudentTaskModel
+    public class StudentTask
     {
         public Guid StudentId { get; set; }
         public Guid TaskId { get; set; }

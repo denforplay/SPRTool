@@ -10,16 +10,16 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
     public class StudentController : ControllerBase
     {
         private readonly IStudentRepository _studentRepository;
-        private readonly IGroupHttpService _groupHttpService;
-        private readonly IStudentTaskHttpService _studentTaskHttpService;
+        private readonly IGroupRepository _groupRepository;
+        private readonly IStudentsTasksRepository _studentTasksRepository;
 
         public StudentController(IStudentRepository studentRepository, 
-            IGroupHttpService groupHttpService,
-            IStudentTaskHttpService studentTaskHttpService)
+            IGroupRepository groupRepository,
+            IStudentsTasksRepository studentsTasksRepository)
         {
             _studentRepository = studentRepository;
-            _groupHttpService = groupHttpService;
-            _studentTaskHttpService = studentTaskHttpService;
+            _groupRepository = groupRepository;
+            _studentTasksRepository = studentsTasksRepository;
         }
 
         [HttpPost]
@@ -52,12 +52,18 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
 
             foreach(var student in students)
             {
+                var group = await _groupRepository.ReadFirstByConditionAsync(x => x.Id == student.GroupId);
+
                 outputStudents.Add(new StudentModel()
                 {
                     Id = student.Id,
                     Name = student.Name,
                     Surname = student.Surname,
-                    Group = await _groupHttpService.ReadGroupByIdAsync(student.GroupId)
+                    Group = new Shared.Models.Group.GroupModel
+                    {
+                        Id = group.Id,
+                        Name = group.Name
+                    }
                 });
             }
 
@@ -72,12 +78,18 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
 
             foreach (var student in students)
             {
+                var group = await _groupRepository.ReadFirstByConditionAsync(x => x.Id == student.GroupId);
+
                 outputStudents.Add(new StudentModel()
                 {
                     Id = student.Id,
                     Name = student.Name,
                     Surname = student.Surname,
-                    Group = await _groupHttpService.ReadGroupByIdAsync(student.GroupId)
+                    Group = new Shared.Models.Group.GroupModel
+                    {
+                        Id = group.Id,
+                        Name = group.Name
+                    }
                 });
             }
 
@@ -88,7 +100,7 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
         public async Task<IActionResult> DeleteStudentById(Guid id)
         {
             await _studentRepository.DeleteByConditionAsync(x => x.Id == id);
-            await _studentTaskHttpService.DeleteAllTasksForStudent(id);
+            await _studentTasksRepository.DeleteByConditionAsync(x => x.StudentId == id);
             return Ok();
         }
 
@@ -99,7 +111,7 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
             await _studentRepository.DeleteByConditionAsync(x => x.GroupId == groupId);
             foreach(var studentFromGroup in studentsFromGroup)
             {
-                await _studentTaskHttpService.DeleteAllTasksForStudent(studentFromGroup.Id);
+                await _studentTasksRepository.DeleteByConditionAsync(x => x.StudentId == studentFromGroup.Id);
             }
 
             return Ok();

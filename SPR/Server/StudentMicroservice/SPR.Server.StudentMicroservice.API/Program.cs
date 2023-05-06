@@ -1,27 +1,18 @@
 using SPR.FileWorker;
-using SPR.Server.StudentMicroservice.API.Controllers;
 using SPR.Server.StudentMicroservice.Domain.Interfaces;
 using SPR.Server.StudentMicroservice.Infrastructure.Repositories;
-using SPR.Server.StudentMicroservice.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var filePath = builder.Configuration["StudentFilePath"];
-var groupMicroserviceAddress = builder.Configuration["GroupMicroserviceAddress"];
-var studentTaskMicroserviceAddress = builder.Configuration["StudentTaskMicroserviceAddress"];
+var studentFilePath = builder.Configuration["StudentFilePath"];
+var groupFilePath = builder.Configuration["GroupFilePath"];
+var courseFilePath = builder.Configuration["CourseFilePath"];
+var studentsTasksFilePath = builder.Configuration["StudentsTasksFilePath"];
 builder.Services.AddSingleton<FileWorker>();
-builder.Services.AddSingleton<IStudentRepository>(sp => new FileStudentRepository(filePath, sp.GetRequiredService<FileWorker>()));
-builder.Services.AddSingleton<IGroupHttpService, GroupHttpService>();
-builder.Services.AddSingleton<IStudentTaskHttpService, StudentTaskHttpService>();
-builder.Services.AddHttpClient<IGroupHttpService, GroupHttpService>(config =>
-{
-    config.BaseAddress = new Uri(groupMicroserviceAddress);
-});
-
-builder.Services.AddHttpClient<IStudentTaskHttpService, StudentTaskHttpService>(config =>
-{
-    config.BaseAddress = new Uri(studentTaskMicroserviceAddress);
-});
+builder.Services.AddSingleton<IStudentRepository>(sp => new FileStudentRepository(studentFilePath, sp.GetRequiredService<FileWorker>()));
+builder.Services.AddSingleton<IGroupRepository>(sp => new FileGroupRepository(groupFilePath, sp.GetRequiredService<FileWorker>()));
+builder.Services.AddSingleton<ICourseRepository>(sp => new CourseFileRepository(courseFilePath, sp.GetRequiredService<FileWorker>()));
+builder.Services.AddSingleton<IStudentsTasksRepository>(sp => new StudentsTasksFileRepository(studentsTasksFilePath, sp.GetRequiredService<FileWorker>()));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

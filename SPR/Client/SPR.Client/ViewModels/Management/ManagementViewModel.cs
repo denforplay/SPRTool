@@ -50,8 +50,8 @@ namespace SPR.Client.ViewModels.Management
 
             for (int i = 0; i < students.Count; i++)
             {
-                ReoGrid.CurrentWorksheet.Cells[i + 1, 0].IsReadOnly = true;
-                ReoGrid.CurrentWorksheet[i+1, 0] = $"{students[i].Name} {students[i].Surname}";
+                ReoGrid.CurrentWorksheet.Cells[i * 2 + 1, 0].IsReadOnly = true;
+                ReoGrid.CurrentWorksheet[i * 2 + 1, 0] = $"{students[i].Name} {students[i].Surname}";
             }
 
             for (int i = 0; i < _currentCourseModel.Tasks.Count; i++)
@@ -68,26 +68,39 @@ namespace SPR.Client.ViewModels.Management
                     if (info.IsCompleted)
                     {
                         checkbox = new CheckBoxCell(true);
+                        ReoGrid.CurrentWorksheet[j * 2 + 1, i + 1] = info.CompletedTime;
                     }
                     else
                     {
                         checkbox = new CheckBoxCell(false);
                     }
+                    var rowIndex = j * 2 + 1;
+                    var colIndex = i + 1;
 
-                    checkbox.CheckChanged += (_, _) => OnCheckChanged(students[newJ], task, checkbox.IsChecked);
-                    ReoGrid.CurrentWorksheet[j + 1, i + 1] = new object[] { checkbox };
+                    checkbox.CheckChanged += (_, _) => OnCheckChanged(students[newJ], task, checkbox.IsChecked, rowIndex, colIndex);
+                    ReoGrid.CurrentWorksheet[j * 2 + 1, i + 1] = new object[] { checkbox };
                 }
             }
         }
 
-        private void OnCheckChanged(StudentModel studentModel, TaskModel taskModel, bool isCompleted)
+        private void OnCheckChanged(StudentModel studentModel, TaskModel taskModel, bool isCompleted, int rowIndex, int colIndex)
         {
             var updateStudentTask = new CreateStudentTaskModel
             {
                 StudentId = studentModel.Id,
                 TaskId = taskModel.Id,
-                IsCompleted = isCompleted
+                IsCompleted = isCompleted,
+                CompletedTime = isCompleted ? DateTime.Now : null
             };
+
+            if (updateStudentTask.IsCompleted)
+            {
+                ReoGrid.CurrentWorksheet[rowIndex + 1, colIndex] = updateStudentTask.CompletedTime.ToString();
+            }
+            else
+            {
+                ReoGrid.CurrentWorksheet[rowIndex + 1, colIndex] = "";
+            }
 
             Application.Current.Dispatcher.Invoke(async () =>
             {

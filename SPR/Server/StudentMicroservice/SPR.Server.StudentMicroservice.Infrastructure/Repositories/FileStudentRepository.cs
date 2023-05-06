@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SPR.Server.StudentMicroservice.Domain.Interfaces;
 using SPR.Server.StudentMicroservice.Domain.Models;
+using Task = System.Threading.Tasks.Task;
 
 namespace SPR.Server.StudentMicroservice.Infrastructure.Repositories
 {

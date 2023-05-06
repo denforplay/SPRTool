@@ -32,11 +32,11 @@ namespace SPR.Client
                     });
                     services.AddHttpClient<ICourseHttpService, CourseHttpService>(config =>
                     {
-                        config.BaseAddress = new Uri("http://localhost:5051");
+                        config.BaseAddress = new Uri("http://localhost:5053");
                     });
                     services.AddHttpClient<IGroupHttpService, GroupHttpService>(config =>
                     {
-                        config.BaseAddress = new Uri("http://localhost:5052");
+                        config.BaseAddress = new Uri("http://localhost:5053");
                     });
                     services.AddHttpClient<IStudentHttpService, StudentHttpService>(config =>
                     {
@@ -44,7 +44,7 @@ namespace SPR.Client
                     });
                     services.AddHttpClient<IStudentTaskHttpService, StudentTaskHttpService>(config =>
                     {
-                        config.BaseAddress = new Uri("http://localhost:5178");
+                        config.BaseAddress = new Uri("http://localhost:5053");
                     });
 
                     services.AddSingleton<INavigationService>(sp => new NavigationService(new ViewModelsFactoryService(
