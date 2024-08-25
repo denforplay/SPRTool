@@ -394,20 +394,18 @@
                             </ListViewItem.ToolTip>
 
                         </ListViewItem>
-                        
-                        <buttons:NavigationButton HorizontalAlignment="Left"
-                                      Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter"
-                                      >
 
-                            <StackPanel Orientation="Horizontal"
-                                        Width="230" Height="50">
+                        <ListViewItem HorizontalAlignment="Center" VerticalAlignment="Center" MouseEnter="ListViewItem_MouseEnter">
+
+                            <StackPanel Orientation="Horizontal" Width="230" Height="50">
                                 <Button Background="{x:Null}" Command="{Binding ManagementNavigationCommand}" BorderBrush="{x:Null}" Foreground="{x:Null}" Style="{StaticResource ButtonWithoutHover}">
                                     <Image Source="Assets/img_map.png" Width="30" Height="30"
                                        Stretch="None"/>
                                 </Button>
 
-                                <TextBlock Text="Maps"
-                                           Margin="25,0,0,0"
+                                <TextBlock Text="Table view"
+                                           Margin="15,0,0,0"
+                                           FontSize="32"
                                            Style="{StaticResource font_style}"/>
 
                             </StackPanel>
@@ -417,20 +415,16 @@
                             <ListViewItem.ToolTip>
 
                                 <ToolTip x:Name="tt_maps"
-                                         Content="Maps"
+                                         Content="Courses"
                                          Style="{StaticResource tt_style}"/>
 
                             </ListViewItem.ToolTip>
 
-                        </buttons:NavigationButton>
-                        
-                        
+                        </ListViewItem>
                         
                         <!--// Sign Out //-->
 
-                        <buttons:NavigationButton HorizontalAlignment="Left"
-                                      Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter"
-                                      >
+                        <ListViewItem HorizontalAlignment="Center" VerticalAlignment="Center" MouseEnter="ListViewItem_MouseEnter">
 
                             <StackPanel Orientation="Horizontal"
                                         Width="230" Height="50">
@@ -455,7 +449,7 @@
 
                             </ListViewItem.ToolTip>
 
-                        </buttons:NavigationButton>
+                        </ListViewItem>
                         
                         <!--// Listview items style template //-->
 

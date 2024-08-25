@@ -20,6 +20,13 @@ namespace SPR.Client.Communication.Http
             return createdModel;
         }
 
+        public async Task<CourseModel> UpdateCourse(UpdateCourseModel courseModel)
+        {
+            var result = await _courseClient.PutAsJsonAsync<UpdateCourseModel>($"/Course/UpdateCourse", courseModel);
+            var createdModel = await result.Content.ReadFromJsonAsync<CourseModel>();
+            return createdModel;
+        }
+
         public async Task DeleteCourse(Guid id)
         {
             await _courseClient.DeleteAsync($"/Course/DeleteCourseById?id={id}");

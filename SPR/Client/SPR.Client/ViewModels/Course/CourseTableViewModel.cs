@@ -2,6 +2,7 @@
 using SPR.Client.Abstractions.Http;
 using SPR.Client.Commands;
 using SPR.Shared.Models.Course;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ namespace SPR.Client.ViewModels.Course
 {
     public class CourseTableViewModel : ViewModelBase
     {
+        public event Action<CourseModel> OnCourseChoosed;
+
         private readonly ICourseHttpService _courseHttpService;
         private ObservableCollection<CourseModel> _courses;
         private CourseModel _selectedCourse;
@@ -30,6 +33,7 @@ namespace SPR.Client.ViewModels.Course
                 _selectedCourse = value;
                 OnPropertyChanged(nameof(SelectedCourse));
                 DeleteCommand.RaiseExecuteChanged();
+                OnCourseChoosed?.Invoke(SelectedCourse);
             }
         }
 

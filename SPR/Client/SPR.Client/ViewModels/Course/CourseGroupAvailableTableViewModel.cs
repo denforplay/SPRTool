@@ -1,8 +1,11 @@
 ﻿using SPR.Client.Abstractions.Core;
 using SPR.Client.Abstractions.Http;
 using SPR.Shared.Models.Group;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace SPR.Client.ViewModels.Course
 {
@@ -48,15 +51,24 @@ namespace SPR.Client.ViewModels.Course
             _availableGroups.Remove(groupModel);
         }
 
-        public void Reload()
+        public void Reload(List<GroupModel> choosedGroups = default)
         {
-            Task.Run(async () => await LoadGroups());
+            Task.Run(async () => await LoadGroups(choosedGroups));
         }
 
-        private async Task LoadGroups()
+        private async Task LoadGroups(List<GroupModel> choosedGroups = default)
         {
-            var loadedGroups = await _groupHttpService.GetAllGroups();
-            AvailableGroups = new ObservableCollection<GroupModel>(loadedGroups);
+            if (choosedGroups == default)
+            {
+                var loadedGroups = await _groupHttpService.GetAllGroups();
+                AvailableGroups = new ObservableCollection<GroupModel>(loadedGroups);
+                return;
+            }
+            else
+            {
+                var loadedGroups = await _groupHttpService.GetAllGroups();
+                AvailableGroups = new ObservableCollection<GroupModel>(loadedGroups.Where(x => !choosedGroups.Any(y => x.Name == y.Name)));
+            }
         }
     }
 }

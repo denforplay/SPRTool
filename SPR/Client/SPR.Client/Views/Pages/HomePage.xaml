@@ -8,9 +8,9 @@
     <Grid>
         <Grid >
 
-            <Grid.Background>
+            <!--<Grid.Background>
                 <ImageBrush ImageSource="../../Assets/img_background.png" Stretch="Fill"/>
-            </Grid.Background>
+            </Grid.Background>-->
         </Grid>
     </Grid>
 </UserControl>

@@ -72,6 +72,17 @@ namespace SPR.Server.StudentMicroservice.Infrastructure.Repositories
             return Task.FromResult(ReadFirstByCondition(condition));
         }
 
+        public async Task UpdateAsync(Course course)
+        {
+            var findedCourse = _courses.FirstOrDefault(x => x.Id == course.Id);
+
+            if (findedCourse is not null)
+            {
+                _courses.Remove(findedCourse);
+                _courses.Add(course);
+            }
+        }
+
         private void Save()
         {
             using (StreamWriter file = File.CreateText(_filePath))

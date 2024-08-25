@@ -1,6 +1,7 @@
 ﻿using SPR.Client.Abstractions.Core;
 using SPR.Client.Abstractions.Http;
 using SPR.Shared.Models.Course;
+using System.Linq;
 
 namespace SPR.Client.ViewModels.Course
 {
@@ -18,7 +19,13 @@ namespace SPR.Client.ViewModels.Course
             _courseHttpService = courseHttpService;
             _courseTableViewModel = new CourseTableViewModel(courseHttpService);
             _courseAddViewModel = new CourseAddViewModel(courseHttpService, groupHttpService);
+            _courseTableViewModel.OnCourseChoosed += OnCourseSelected;
             _courseAddViewModel.OnCourseAdded += AddCourse;
+        }
+
+        private void OnCourseSelected(CourseModel courseModel)
+        {
+            _courseAddViewModel.SetCourseModel(courseModel);
         }
 
         private void AddCourse(CourseModel courseModel)

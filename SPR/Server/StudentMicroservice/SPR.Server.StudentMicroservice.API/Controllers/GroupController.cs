@@ -11,11 +11,14 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
     {
         private readonly IGroupRepository _groupRepository;
         private readonly IStudentRepository _studentRepository;
+        private readonly ICourseRepository _courseRepository;
 
-        public GroupController(IGroupRepository groupRepository, IStudentRepository studentRepository)
+        public GroupController(IGroupRepository groupRepository, IStudentRepository studentRepository,
+            ICourseRepository courseRepository)
         {
             _groupRepository = groupRepository;
             _studentRepository = studentRepository;
+            _courseRepository = courseRepository;
         }
 
         [HttpPost]

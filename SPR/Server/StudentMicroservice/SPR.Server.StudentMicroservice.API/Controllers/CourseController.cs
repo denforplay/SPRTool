@@ -44,6 +44,34 @@ namespace SPR.Server.StudentMicroservice.API.Controllers
             };
         }
 
+        [HttpPut]
+        public async Task<CourseModel> UpdateCourse([FromBody] UpdateCourseModel courseModel)
+        {
+            await _courseRepository.DeleteAsync(courseModel.Id);
+
+            var newCourse = new Course
+            {
+                Id = courseModel.Id,
+                Name = courseModel.Name,
+                Tasks = courseModel.Tasks.Select(task => new Domain.Models.Task { Id = Guid.NewGuid(), Name = task.Name }).ToList(),
+                Groups = courseModel.Groups is null ? new List<Guid>() : courseModel.Groups.Select(x => x.Id).ToList()
+            };
+
+            await _courseRepository.AddAsync(newCourse);
+
+            return new CourseModel
+            {
+                Id = newCourse.Id,
+                Name = newCourse.Name,
+                Groups = courseModel.Groups,
+                Tasks = newCourse.Tasks.Select(task => new TaskModel
+                {
+                    Id = task.Id,
+                    Name = task.Name
+                }).ToList()
+            };
+        }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteCourseById(Guid id)
         {

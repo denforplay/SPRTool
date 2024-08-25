@@ -35,6 +35,7 @@
         <TextBox Text="{Binding Path=TaskName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="6" Grid.Column="0" MinWidth="150"/>
         <Button Command="{Binding AddTaskCommand}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" FontSize="40" Content="Add task"/>
         <local:CourseTaskTable DataContext="{Binding Path = TaskTableViewModel}" Grid.Row="7" Grid.ColumnSpan="2"></local:CourseTaskTable>
-        <Button Command="{Binding AddCourseCommand}" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" FontSize="40" Content="Add course"/>
+        <Button Command="{Binding AddCourseCommand}" Grid.Row="8" Grid.Column="0" FontSize="40" Content="Add"/>
+        <Button Command="{Binding UpdateCourseCommand}" IsEnabled="{Binding CanUpdate}" Visibility="{Binding CanUpdate}" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" FontSize="40" Content="Update"/>
     </Grid>
 </UserControl>

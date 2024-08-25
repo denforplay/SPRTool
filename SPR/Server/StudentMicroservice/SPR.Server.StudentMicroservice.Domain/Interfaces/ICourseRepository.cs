@@ -9,6 +9,7 @@ namespace SPR.Server.StudentMicroservice.Domain.Interfaces
         Task AddAsync(Course course);
         void Delete(Guid id);
         Task DeleteAsync(Guid id);
+        Task UpdateAsync(Course course);
         Course ReadFirstByCondition(Func<Course, bool> condition);
         Task<Course> ReadFirstByConditionAsync(Func<Course, bool> condition);
         IReadOnlyCollection<Course> ReadAll();

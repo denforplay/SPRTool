@@ -24,5 +24,11 @@ namespace SPR.Client.Views.Pages.Course
         {
             InitializeComponent();
         }
+
+        private void SelectItemClick(object sender, RoutedEventArgs e)
+        {
+            var buttonElement = (Button)sender;
+            courseView.SelectedItem = buttonElement.DataContext;
+        }
     }
 }
